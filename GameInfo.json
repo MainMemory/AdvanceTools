@@ -1,0 +1,1772 @@
+[
+  {
+    "game": 1,
+    "code": "ASO",
+    "versions": [
+      {
+        "region": "E",
+        "version": 0,
+        "mapTable": "4A6C40",
+        "collisionTable": "4A6DA4",
+        "interactableTable": "B7F94",
+        "itemTable": "B7FDC",
+        "enemyTable": "B8024",
+        "ringTable": "B7F4C",
+        "startTable": "4A6DEC",
+        "spriteTable": "D868C"
+      }
+    ],
+    "levels": [
+      "Neo Green Hill Zone Act 1",
+      "Neo Green Hill Zone Act 2",
+      "Secret Base Zone Act 1",
+      "Secret Base Zone Act 2",
+      "Casino Paradise Zone Act 1",
+      "Casino Paradise Zone Act 2",
+      "Ice Mountain Zone Act 1",
+      "Ice Mountain Zone Act 2",
+      "Angel Island Zone Act 1",
+      "Angel Island Zone Act 2",
+      "Egg Rocket Zone",
+      "Cosmic Angel Zone",
+      "X Zone",
+      "The Moon Zone",
+      "Multiplayer 1",
+      "Multiplayer 2",
+      "Multiplayer 3",
+      "Multiplayer 4"
+    ],
+    "backgrounds": [
+      {
+        "name": "Special Stage Back"
+      },
+      {
+        "name": "Special Stage Tube 01"
+      },
+      {
+        "name": "Special Stage Tube 02"
+      },
+      {
+        "name": "Special Stage Tube 03"
+      },
+      {
+        "name": "Special Stage Tube 04"
+      },
+      {
+        "name": "Special Stage Tube 05"
+      },
+      {
+        "name": "Special Stage Tube 06"
+      },
+      {
+        "name": "Special Stage Tube 07"
+      },
+      {
+        "name": "Special Stage Tube 08"
+      },
+      {
+        "name": "Special Stage Tube 09"
+      },
+      {
+        "name": "Special Stage Tube 10"
+      },
+      {
+        "name": "Special Stage Tube 11"
+      },
+      {
+        "name": "Special Stage Tube 12"
+      },
+      {
+        "name": "Special Stage Tube 13"
+      },
+      {
+        "name": "Special Stage Tube 14"
+      },
+      {
+        "name": "Special Stage Tube 15"
+      },
+      {
+        "name": "Special Stage Tube 16"
+      },
+      {
+        "name": "Ice Mountain Zone Snow"
+      },
+      {
+        "name": "Angel Island Zone Clouds"
+      },
+      {
+        "name": "Sonic Advance Logo JP",
+        "mode": 2
+      },
+      {
+        "name": "Sonic Advance Logo EN",
+        "mode": 2
+      },
+      {
+        "name": "Title Screen",
+        "mode": 1
+      },
+      {
+        "name": "VS Mode Select JP"
+      },
+      {
+        "name": "VS Mode Select EN"
+      },
+      {
+        "name": "VS Connection Success"
+      },
+      {
+        "name": "VS Connection Fail"
+      },
+      {
+        "name": "VS Waiting"
+      },
+      {
+        "name": "VS Team Select"
+      },
+      {
+        "name": "VS Overlay"
+      },
+      {
+        "name": "VS Loading"
+      },
+      {
+        "name": "VS Game Select JP"
+      },
+      {
+        "name": "VS Game Select EN"
+      },
+      {
+        "name": "Sega Logo"
+      },
+      {
+        "name": "Sonic Team Logo"
+      },
+      {
+        "name": "VS Matchup"
+      }
+    ],
+    "animationCount": 906
+  },
+  {
+    "game": 2,
+    "code": "A2N",
+    "versions": [
+      {
+        "region": "E",
+        "version": 0,
+        "mapTable": "D5CE4",
+        "collisionTable": "D62D8",
+        "interactableTable": "D4C84",
+        "itemTable": "D4D0C",
+        "enemyTable": "D4D94",
+        "ringTable": "D4BFC",
+        "startTable": "D6374",
+        "spriteTable": "F40D4"
+      }
+    ],
+    "levels": [
+      "Leaf Forest Act 1",
+      "Leaf Forest Act 2",
+      "Leaf Forest Boss",
+      "Leaf Forest Act 4",
+      "Hot Crater Act 1",
+      "Hot Crater Act 2",
+      "Hot Crater Boss",
+      "Hot Crater Act 4",
+      "Music Plant Act 1",
+      "Music Plant Act 2",
+      "Music Plant Boss",
+      "Music Plant Act 4",
+      "Ice Paradise Act 1",
+      "Ice Paradise Act 2",
+      "Ice Paradise Boss",
+      "Ice Paradise Act 4",
+      "Sky Canyon Act 1",
+      "Sky Canyon Act 2",
+      "Sky Canyon Boss",
+      "Sky Canyon Act 4",
+      "Techno Base Act 1",
+      "Techno Base Act 2",
+      "Techno Base Boss",
+      "Techno Base Act 4",
+      "Egg Utopia Act 1",
+      "Egg Utopia Act 2",
+      "Egg Utopia Boss",
+      "Egg Utopia Act 4",
+      "XX",
+      "True Area 53",
+      "Unknown"
+    ],
+    "backgrounds": [
+      null,
+      {
+        "name": "Sonic Advance Logo",
+        "mode": 2
+      },
+      {
+        "name": "Sonic Advance Title Screen",
+        "mode": 1
+      },
+      {
+        "name": "Sega Logo"
+      },
+      {
+        "name": "Sonic Team Logo"
+      },
+      {
+        "name": "Character Select Back Static"
+      },
+      {
+        "name": "Character Select Front"
+      },
+      {
+        "name": "Zone Map Top Sonic"
+      },
+      {
+        "name": "Zone Map Top Cream"
+      },
+      {
+        "name": "Zone Map Top Tails"
+      },
+      {
+        "name": "Zone Map Top Knuckles"
+      },
+      {
+        "name": "Zone Map Top Amy"
+      },
+      {
+        "name": "Zone Map"
+      },
+      {
+        "name": "Egg Saucer Wheel"
+      },
+      {
+        "name": "Beta Title Screen BG"
+      },
+      {
+        "name": "BG 015"
+      },
+      {
+        "name": "Sonic Advance 2 Logo JP (Unused)",
+        "mode": 2
+      },
+      {
+        "name": "VS Time Attack Menu BG"
+      },
+      {
+        "name": "Multiplayer Menu Color"
+      },
+      {
+        "name": "Time Attack Menu Color"
+      },
+      {
+        "name": "Leaf Forest BG 2"
+      },
+      {
+        "name": "VS Waiting"
+      },
+      {
+        "name": "VS Connection"
+      },
+      {
+        "name": "VS Character Results JP"
+      },
+      {
+        "name": "VS Character Results EN"
+      },
+      {
+        "name": "VS Character Results DE"
+      },
+      {
+        "name": "VS Character Results FR"
+      },
+      {
+        "name": "VS Character Results ES"
+      },
+      {
+        "name": "VS Character Results IT"
+      },
+      {
+        "name": "VS Team Play Orange"
+      },
+      {
+        "name": "VS Team Play BG"
+      },
+      {
+        "name": "VS Team Play Confirm Box"
+      },
+      {
+        "name": "VS Team Play Select Box"
+      },
+      {
+        "name": "VS Team Play Overlay"
+      },
+      {
+        "name": "VS Loading JP"
+      },
+      {
+        "name": "VS Loading EN"
+      },
+      {
+        "name": "VS Loading DE"
+      },
+      {
+        "name": "VS Loading FR"
+      },
+      {
+        "name": "VS Loading ES"
+      },
+      {
+        "name": "VS Loading IT"
+      },
+      {
+        "name": "Options Menu"
+      },
+      {
+        "name": "Options Sub-Menu"
+      },
+      {
+        "name": "Name Screen"
+      },
+      {
+        "name": "Text Grid"
+      },
+      {
+        "name": "Records BG"
+      },
+      {
+        "name": "Time Record Overlay"
+      },
+      {
+        "name": "Time Attack BG"
+      },
+      {
+        "name": "Time Attack Sonic BG"
+      },
+      {
+        "name": "Time Attack Sonic Overlay"
+      },
+      {
+        "name": "Time Attack Tails BG"
+      },
+      {
+        "name": "Time Attack Tails Overlay"
+      },
+      {
+        "name": "Time Attack Knuckles BG"
+      },
+      {
+        "name": "Time Attack Knuckles Overlay"
+      },
+      {
+        "name": "Time Attack Amy BG"
+      },
+      {
+        "name": "Time Attack Amy Overlay"
+      },
+      {
+        "name": "Time Attack Cream BG"
+      },
+      {
+        "name": "Time Attack Cream Overlay"
+      },
+      {
+        "name": "Time Attack Results Text Box"
+      },
+      {
+        "name": "Time Attack Results BG"
+      },
+      {
+        "name": "VS Record Overlay"
+      },
+      {
+        "name": "Special Stage 1 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 1 BG"
+      },
+      {
+        "name": "Special Stage 2 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 2 BG"
+      },
+      {
+        "name": "Special Stage 3 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 3 BG"
+      },
+      {
+        "name": "Special Stage 4 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 4 BG"
+      },
+      {
+        "name": "Special Stage 5 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 5 BG"
+      },
+      {
+        "name": "Special Stage 6 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 6 BG"
+      },
+      {
+        "name": "Special Stage 7 Floor",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 7 BG"
+      },
+      {
+        "name": "Techno Base BG Effect 1"
+      },
+      {
+        "name": "Techno Base BG Effect 2"
+      },
+      {
+        "name": "Sound Test BG"
+      },
+      {
+        "name": "Extra Ending BG"
+      },
+      {
+        "name": "Normal Ending Overlay"
+      },
+      {
+        "name": "Normal Ending BG"
+      },
+      {
+        "name": "Normal Ending Overlay Explosion"
+      },
+      {
+        "name": "Normal Ending Explosion"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Screen"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Text EN"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Text FR"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Text DE"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Text IT"
+      },
+      {
+        "name": "Collect All Chaos Emeralds Text ES"
+      },
+      {
+        "name": "Bonus Unlocked Screen"
+      },
+      {
+        "name": "Tiny Chao Garden Unlock Text EN"
+      },
+      {
+        "name": "Tiny Chao Garden Unlock Text FR"
+      },
+      {
+        "name": "Tiny Chao Garden Unlock Text DE"
+      },
+      {
+        "name": "Tiny Chao Garden Unlock Text IT"
+      },
+      {
+        "name": "Tiny Chao Garden Unlock Text ES"
+      },
+      {
+        "name": "Sound Test Unlock Text JP"
+      },
+      {
+        "name": "Sound Test Unlock Text EN"
+      },
+      {
+        "name": "Sound Test Unlock Text FR"
+      },
+      {
+        "name": "Sound Test Unlock Text DE"
+      },
+      {
+        "name": "Sound Test Unlock Text IT"
+      },
+      {
+        "name": "Sound Test Unlock Text ES"
+      },
+      {
+        "name": "Boss Attack Unlock Text JP"
+      },
+      {
+        "name": "Boss Attack Unlock Text EN"
+      },
+      {
+        "name": "Boss Attack Unlock Text FR"
+      },
+      {
+        "name": "Boss Attack Unlock Text DE"
+      },
+      {
+        "name": "Boss Attack Unlock Text IT"
+      },
+      {
+        "name": "Boss Attack Unlock Text ES"
+      },
+      {
+        "name": "Amy Rose Unlock Text JP"
+      },
+      {
+        "name": "Amy Rose Unlock Text EN"
+      },
+      {
+        "name": "Amy Rose Unlock Text FR"
+      },
+      {
+        "name": "Amy Rose Unlock Text DE"
+      },
+      {
+        "name": "Amy Rose Unlock Text IT"
+      },
+      {
+        "name": "Amy Rose Unlock Text ES"
+      },
+      {
+        "name": "Bad Ending FG"
+      },
+      {
+        "name": "Bad Ending BG"
+      },
+      {
+        "name": "Good Ending FG"
+      },
+      {
+        "name": "Good Ending BG"
+      },
+      {
+        "name": "Egg Utopia Outside BG"
+      },
+      {
+        "name": "Extra Ending Picture"
+      },
+      {
+        "name": "Extra Credits Insert 1"
+      },
+      {
+        "name": "Extra Credits Insert 2"
+      },
+      {
+        "name": "Extra Credits Insert 3"
+      },
+      {
+        "name": "Extra Credits Insert 4"
+      },
+      {
+        "name": "Extra Credits Insert 5"
+      },
+      {
+        "name": "Extra Credits Animation 01"
+      },
+      {
+        "name": "Extra Credits Animation 02"
+      },
+      {
+        "name": "Extra Credits Animation 03"
+      },
+      {
+        "name": "Extra Credits Animation 04"
+      },
+      {
+        "name": "Extra Credits Animation 05"
+      },
+      {
+        "name": "Extra Credits Animation 06"
+      },
+      {
+        "name": "Extra Credits Animation 07"
+      },
+      {
+        "name": "Extra Credits Animation 08"
+      },
+      {
+        "name": "Extra Credits Animation 09"
+      },
+      {
+        "name": "Extra Credits Animation 10"
+      },
+      {
+        "name": "Extra Credits Animation 11"
+      },
+      {
+        "name": "Normal Credits Insert 1"
+      },
+      {
+        "name": "Normal Credits Insert 2"
+      },
+      {
+        "name": "Normal Credits Insert 3"
+      },
+      {
+        "name": "Normal Credits Insert 4"
+      },
+      {
+        "name": "Normal Credits Insert 5"
+      },
+      {
+        "name": "Normal Credits Logo JP",
+        "mode": 1
+      },
+      {
+        "name": "Normal Credits Logo EN",
+        "mode": 1
+      },
+      {
+        "name": "Credits Screen 01"
+      },
+      {
+        "name": "Credits Screen 02"
+      },
+      {
+        "name": "Credits Screen 03"
+      },
+      {
+        "name": "Credits Screen 04"
+      },
+      {
+        "name": "Credits Screen 05"
+      },
+      {
+        "name": "Credits Screen 06"
+      },
+      {
+        "name": "Credits Screen 07"
+      },
+      {
+        "name": "Credits Screen 08"
+      },
+      {
+        "name": "Credits Screen 09"
+      },
+      {
+        "name": "Credits Screen 10"
+      },
+      {
+        "name": "Credits Screen 11"
+      },
+      {
+        "name": "Credits Screen 12"
+      },
+      {
+        "name": "Credits Screen 13"
+      },
+      {
+        "name": "Credits Screen 14"
+      },
+      {
+        "name": "Credits Screen 15"
+      },
+      {
+        "name": "Credits Screen 16"
+      },
+      {
+        "name": "Credits Screen 17"
+      },
+      {
+        "name": "Credits Screen 18"
+      },
+      {
+        "name": "Credits Screen 19"
+      },
+      {
+        "name": "Credits Screen 20"
+      },
+      {
+        "name": "Credits Screen 21"
+      },
+      {
+        "name": "Credits Screen 22"
+      },
+      {
+        "name": "Credits Screen 23"
+      },
+      {
+        "name": "Credits Screen 24"
+      },
+      {
+        "name": "Credits Screen 25"
+      },
+      {
+        "name": "Credits Copyright 2003"
+      },
+      {
+        "name": "Presented By Sega"
+      },
+      {
+        "name": "Title Screen BG"
+      },
+      {
+        "name": "Title Screen Waves",
+        "mode": 2
+      },
+      {
+        "name": "Title Screen Lens Flare"
+      },
+      {
+        "name": "Sonic Advance 2 Logo JP",
+        "mode": 2
+      },
+      {
+        "name": "Sonic Advance 2 Logo EN",
+        "mode": 2
+      },
+      {
+        "name": "Cream Cutscene Image 1"
+      },
+      {
+        "name": "Cream Cutscene Image 2"
+      },
+      {
+        "name": "Cream Cutscene Image 3"
+      },
+      {
+        "name": "Cream Cutscene Image 4"
+      },
+      {
+        "name": "Cream Cutscene Text 1 JP"
+      },
+      {
+        "name": "Cream Cutscene Text 2 JP"
+      },
+      {
+        "name": "Cream Cutscene Text 3 JP"
+      },
+      {
+        "name": "Cream Cutscene Text 4 JP"
+      },
+      {
+        "name": "Cream Unlock Message JP"
+      },
+      {
+        "name": "Cream Cutscene Text 1 EN"
+      },
+      {
+        "name": "Cream Cutscene Text 2 EN"
+      },
+      {
+        "name": "Cream Cutscene Text 3 EN"
+      },
+      {
+        "name": "Cream Cutscene Text 4 EN"
+      },
+      {
+        "name": "Cream Unlock Message EN"
+      },
+      {
+        "name": "Cream Cutscene Text 1 FR"
+      },
+      {
+        "name": "Cream Cutscene Text 2 FR"
+      },
+      {
+        "name": "Cream Cutscene Text 3 FR"
+      },
+      {
+        "name": "Cream Cutscene Text 4 FR"
+      },
+      {
+        "name": "Cream Unlock Message FR"
+      },
+      {
+        "name": "Cream Cutscene Text 1 DE"
+      },
+      {
+        "name": "Cream Cutscene Text 2 DE"
+      },
+      {
+        "name": "Cream Cutscene Text 3 DE"
+      },
+      {
+        "name": "Cream Cutscene Text 4 DE"
+      },
+      {
+        "name": "Cream Unlock Message DE"
+      },
+      {
+        "name": "Cream Cutscene Text 1 IT"
+      },
+      {
+        "name": "Cream Cutscene Text 2 IT"
+      },
+      {
+        "name": "Cream Cutscene Text 3 IT"
+      },
+      {
+        "name": "Cream Cutscene Text 4 IT"
+      },
+      {
+        "name": "Cream Unlock Message IT"
+      },
+      {
+        "name": "Cream Cutscene Text 1 ES"
+      },
+      {
+        "name": "Cream Cutscene Text 2 ES"
+      },
+      {
+        "name": "Cream Cutscene Text 3 ES"
+      },
+      {
+        "name": "Cream Cutscene Text 4 ES"
+      },
+      {
+        "name": "Cream Unlock Message ES"
+      },
+      {
+        "name": "Knuckles Cutscene Image 1"
+      },
+      {
+        "name": "Knuckles Cutscene Image 2"
+      },
+      {
+        "name": "Knuckles Cutscene Image 3"
+      },
+      {
+        "name": "Knuckles Cutscene Image 4"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 JP"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 JP"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 JP"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 JP"
+      },
+      {
+        "name": "Knuckles Unlock Message JP"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 EN"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 EN"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 EN"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 EN"
+      },
+      {
+        "name": "Knuckles Unlock Message EN"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 FR"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 FR"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 FR"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 FR"
+      },
+      {
+        "name": "Knuckles Unlock Message FR"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 DE"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 DE"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 DE"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 DE"
+      },
+      {
+        "name": "Knuckles Unlock Message DE"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 IT"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 IT"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 IT"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 IT"
+      },
+      {
+        "name": "Knuckles Unlock Message IT"
+      },
+      {
+        "name": "Knuckles Cutscene Text 1 ES"
+      },
+      {
+        "name": "Knuckles Cutscene Text 2 ES"
+      },
+      {
+        "name": "Knuckles Cutscene Text 3 ES"
+      },
+      {
+        "name": "Knuckles Cutscene Text 4 ES"
+      },
+      {
+        "name": "Knuckles Unlock Message ES"
+      },
+      {
+        "name": "Tails Cutscene Image 1"
+      },
+      {
+        "name": "Tails Cutscene Image 2"
+      },
+      {
+        "name": "Tails Cutscene Image 3"
+      },
+      {
+        "name": "Tails Cutscene Image 4"
+      },
+      {
+        "name": "Tails Cutscene Text 1 JP"
+      },
+      {
+        "name": "Tails Cutscene Text 2 JP"
+      },
+      {
+        "name": "Tails Cutscene Text 3 JP"
+      },
+      {
+        "name": "Tails Cutscene Text 4 JP"
+      },
+      {
+        "name": "Tails Unlock Message JP"
+      },
+      {
+        "name": "Tails Cutscene Text 1 EN"
+      },
+      {
+        "name": "Tails Cutscene Text 2 EN"
+      },
+      {
+        "name": "Tails Cutscene Text 3 EN"
+      },
+      {
+        "name": "Tails Cutscene Text 4 EN"
+      },
+      {
+        "name": "Tails Unlock Message EN"
+      },
+      {
+        "name": "Tails Cutscene Text 1 FR"
+      },
+      {
+        "name": "Tails Cutscene Text 2 FR"
+      },
+      {
+        "name": "Tails Cutscene Text 3 FR"
+      },
+      {
+        "name": "Tails Cutscene Text 4 FR"
+      },
+      {
+        "name": "Tails Unlock Message FR"
+      },
+      {
+        "name": "Tails Cutscene Text 1 DE"
+      },
+      {
+        "name": "Tails Cutscene Text 2 DE"
+      },
+      {
+        "name": "Tails Cutscene Text 3 DE"
+      },
+      {
+        "name": "Tails Cutscene Text 4 DE"
+      },
+      {
+        "name": "Tails Unlock Message DE"
+      },
+      {
+        "name": "Tails Cutscene Text 1 IT"
+      },
+      {
+        "name": "Tails Cutscene Text 2 IT"
+      },
+      {
+        "name": "Tails Cutscene Text 3 IT"
+      },
+      {
+        "name": "Tails Cutscene Text 4 IT"
+      },
+      {
+        "name": "Tails Unlock Message IT"
+      },
+      {
+        "name": "Tails Cutscene Text 1 ES"
+      },
+      {
+        "name": "Tails Cutscene Text 2 ES"
+      },
+      {
+        "name": "Tails Cutscene Text 3 ES"
+      },
+      {
+        "name": "Tails Cutscene Text 4 ES"
+      },
+      {
+        "name": "Tails Unlock Message ES"
+      },
+      {
+        "name": "Super Eggrobo Z Body"
+      },
+      {
+        "name": "Music Plant BG 2"
+      },
+      {
+        "name": "Sky Canyon Clouds"
+      },
+      {
+        "name": "Ice Paradise Snow"
+      },
+      {
+        "name": "True Area 53 BG"
+      },
+      {
+        "name": "Character Select Overlay"
+      },
+      {
+        "name": "Character Select Back"
+      },
+      {
+        "name": "True Area 53 Boss Body",
+        "mode": 2
+      },
+      {
+        "name": "True Area 53 BG Alt"
+      },
+      {
+        "name": "Extra Intro BG"
+      },
+      {
+        "name": "Extra Intro BG Alt"
+      },
+      {
+        "name": "Extra Intro Super Sonic Image"
+      },
+      {
+        "name": "Egg Utopia Inside BG"
+      }
+    ],
+    "animationCount": 1133
+  },
+  {
+    "game": 3,
+    "code": "B3S",
+    "versions": [
+      {
+        "region": "E",
+        "version": 0,
+        "mapTable": "D0624",
+        "collisionTable": "D0D78",
+        "interactableTable": "D0E9C",
+        "itemTable": "D0FC0",
+        "enemyTable": "D10E4",
+        "ringTable": "CEBD0",
+        "startTable": "D13C8",
+        "spriteTable": "3314F0"
+      },
+      {
+        "region": "P",
+        "version": 0,
+        "mapTable": "C9FF0",
+        "spriteTable": "32AFAC"
+      }
+    ],
+    "levels": [
+      null,
+      "Sonic Factory",
+      "Route 99 Map",
+      "Route 99 Act 1",
+      "Route 99 Act 2",
+      "Route 99 Act 3",
+      null,
+      "Route 99 Boss",
+      "Route 99 Bonus 1",
+      "Route 99 Bonus 2",
+      null,
+      "Chao Playground",
+      "Sunset Hill Map",
+      "Sunset Hill Act 1",
+      "Sunset Hill Act 2",
+      "Sunset Hill Act 3",
+      null,
+      "Sunset Hill Boss",
+      "Sunset Hill Bonus 1",
+      "Sunset Hill Bonus 2",
+      null,
+      null,
+      "Ocean Base Map",
+      "Ocean Base Act 1",
+      "Ocean Base Act 2",
+      "Ocean Base Act 3",
+      null,
+      "Ocean Base Boss",
+      "Ocean Base Bonus 1",
+      "Ocean Base Bonus 2",
+      null,
+      null,
+      "Toy Kingdom Map",
+      "Toy Kingdom Act 1",
+      "Toy Kingdom Act 2",
+      "Toy Kingdom Act 3",
+      null,
+      "Toy Kingdom Boss",
+      "Toy Kingdom Bonus 1",
+      "Toy Kingdom Bonus 2",
+      null,
+      null,
+      "Twinkle Snow Map",
+      "Twinkle Snow Act 1",
+      "Twinkle Snow Act 2",
+      "Twinkle Snow Act 3",
+      null,
+      "Twinkle Snow Boss",
+      "Twinkle Snow Bonus 1",
+      "Twinkle Snow Bonus 2",
+      null,
+      null,
+      "Cyber Track Map",
+      "Cyber Track Act 1",
+      "Cyber Track Act 2",
+      "Cyber Track Act 3",
+      null,
+      "Cyber Track Boss",
+      "Cyber Track Bonus 1",
+      "Cyber Track Bonus 2",
+      null,
+      null,
+      "Chaos Angel Map",
+      "Chaos Angel Act 1",
+      "Chaos Angel Act 2",
+      "Chaos Angel Act 3",
+      null,
+      "Chaos Angel Boss",
+      "Chaos Angel Bonus 1",
+      "Chaos Angel Bonus 2",
+      null,
+      "Altar Emerald",
+      "Nonagression"
+    ],
+    "backgrounds": [
+      {
+        "name": "Title Screen",
+        "mode": 1
+      },
+      {
+        "name": "Logo Text JP",
+        "mode": 1
+      },
+      {
+        "name": "Logo 3 JP",
+        "mode": 2
+      },
+      {
+        "name": "Logo Full JP",
+        "mode": 1
+      },
+      {
+        "name": "Logo Text EN",
+        "mode": 1
+      },
+      {
+        "name": "Logo 3 EN",
+        "mode": 2
+      },
+      {
+        "name": "Logo Full EN",
+        "mode": 1
+      },
+      {
+        "name": "Intro Eggman BG",
+        "mode": 1
+      },
+      {
+        "name": "Intro Eggman Body",
+        "mode": 1
+      },
+      {
+        "name": "Intro Eggman Arm",
+        "mode": 1
+      },
+      {
+        "name": "Intro Emerald Case",
+        "mode": 1
+      },
+      {
+        "name": "Intro Sonic Tails Looking",
+        "mode": 1
+      },
+      {
+        "name": "Intro Emerald Glowing",
+        "mode": 1
+      },
+      {
+        "name": "Master Emerald Altar"
+      },
+      {
+        "name": "Altar Emerald BG"
+      },
+      {
+        "name": "Normal Ending Photo",
+        "mode": 1
+      },
+      {
+        "name": "Normal Ending Photo Sepia",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 1",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 2",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 3",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 4",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 5",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 6",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 7",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 8",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Image 9",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Final Image",
+        "mode": 1
+      },
+      {
+        "name": "True Ending Final Image Sepia",
+        "mode": 1
+      },
+      {
+        "name": "Sonic Advance 3 End"
+      },
+      {
+        "name": "Presented By Sega",
+        "mode": 1
+      },
+      {
+        "name": "Boss Attack Unlock Message JP"
+      },
+      {
+        "name": "Boss Attack Unlock Message EN"
+      },
+      {
+        "name": "Boss Attack Unlock Message DE"
+      },
+      {
+        "name": "Boss Attack Unlock Message FR"
+      },
+      {
+        "name": "Boss Attack Unlock Message ES"
+      },
+      {
+        "name": "Boss Attack Unlock Message IT"
+      },
+      {
+        "name": "Sound Test Unlock Message JP"
+      },
+      {
+        "name": "Sound Test Unlock Message EN"
+      },
+      {
+        "name": "Sound Test Unlock Message DE"
+      },
+      {
+        "name": "Sound Test Unlock Message FR"
+      },
+      {
+        "name": "Sound Test Unlock Message ES"
+      },
+      {
+        "name": "Sound Test Unlock Message IT"
+      },
+      {
+        "name": "Unlock Screen Text Box"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message JP"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message EN"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message DE"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message FR"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message ES"
+      },
+      {
+        "name": "Special Stage Attack Unlock Message IT"
+      },
+      {
+        "name": "Special Stage Attack Button Code"
+      },
+      {
+        "name": "Unlock Screen BG"
+      },
+      {
+        "name": "Main Menu BG"
+      },
+      {
+        "name": "Main Menu Scrolling Overlay"
+      },
+      {
+        "name": "Main Menu Game Play Text",
+        "mode": 2
+      },
+      {
+        "name": "Main Menu VS Text",
+        "mode": 2
+      },
+      {
+        "name": "Main Menu Time Attack Text",
+        "mode": 2
+      },
+      {
+        "name": "Main Menu Options Text",
+        "mode": 2
+      },
+      {
+        "name": "Options Menu BG"
+      },
+      {
+        "name": "Options Sub-Menu"
+      },
+      {
+        "name": "Change Name BG"
+      },
+      {
+        "name": "Text Grid"
+      },
+      {
+        "name": "Time Attack BG"
+      },
+      {
+        "name": "Time Attack Zone Icons"
+      },
+      {
+        "name": "Time Attack Ranking Overlay"
+      },
+      {
+        "name": "BG 064"
+      },
+      {
+        "name": "Sound Test BG",
+        "mode": 1
+      },
+      {
+        "name": "Sound Test Speaker",
+        "mode": 2
+      },
+      {
+        "name": "Character Select BG"
+      },
+      {
+        "name": "CS Sonic Name",
+        "mode": 2
+      },
+      {
+        "name": "CS Cream Name",
+        "mode": 2
+      },
+      {
+        "name": "CS Tails Name",
+        "mode": 2
+      },
+      {
+        "name": "CS Knuckles Name",
+        "mode": 2
+      },
+      {
+        "name": "CS Amy Name",
+        "mode": 2
+      },
+      {
+        "name": "CS Sonic Name Static"
+      },
+      {
+        "name": "CS Cream Name Static"
+      },
+      {
+        "name": "CS Tails Name Static"
+      },
+      {
+        "name": "CS Knuckles Name Static"
+      },
+      {
+        "name": "CS Amy Name Static"
+      },
+      {
+        "name": "Character Select OK Text",
+        "mode": 2
+      },
+      {
+        "name": "CS Locked Character",
+        "mode": 2
+      },
+      {
+        "name": "CS Locked Character Static"
+      },
+      {
+        "name": "Multi Pak VS Default Players BG"
+      },
+      {
+        "name": "Multi Pak VS Zone Select",
+        "mode": 1
+      },
+      {
+        "name": "Checking Communication Text JP"
+      },
+      {
+        "name": "Checking Communication Text EN"
+      },
+      {
+        "name": "Checking Communication Text DE"
+      },
+      {
+        "name": "Checking Communication Text FR"
+      },
+      {
+        "name": "Checking Communication Text ES"
+      },
+      {
+        "name": "Checking Communication Text IT"
+      },
+      {
+        "name": "Communication Successful Text JP"
+      },
+      {
+        "name": "Communication Successful Text EN"
+      },
+      {
+        "name": "Communication Successful Text DE"
+      },
+      {
+        "name": "Communication Successful Text FR"
+      },
+      {
+        "name": "Communication Successful Text ES"
+      },
+      {
+        "name": "Communication Successful Text IT"
+      },
+      {
+        "name": "Communication Error Text JP"
+      },
+      {
+        "name": "Communication Error Text EN"
+      },
+      {
+        "name": "Communication Error Text DE"
+      },
+      {
+        "name": "Communication Error Text FR"
+      },
+      {
+        "name": "Communication Error Text ES"
+      },
+      {
+        "name": "Communication Error Text IT"
+      },
+      {
+        "name": "Checking Communication BG"
+      },
+      {
+        "name": "Communication Error BG"
+      },
+      {
+        "name": "Communication Successful BG"
+      },
+      {
+        "name": "Single Pak VS Loading BG"
+      },
+      {
+        "name": "Please Wait Text JP"
+      },
+      {
+        "name": "Please Wait Text EN"
+      },
+      {
+        "name": "Please Wait Text DE"
+      },
+      {
+        "name": "Please Wait Text FR"
+      },
+      {
+        "name": "Please Wait Text ES"
+      },
+      {
+        "name": "Please Wait Text IT"
+      },
+      {
+        "name": "Knuckles Unlock Text JP"
+      },
+      {
+        "name": "Knuckles Unlock Text EN"
+      },
+      {
+        "name": "Knuckles Unlock Text DE"
+      },
+      {
+        "name": "Knuckles Unlock Text FR"
+      },
+      {
+        "name": "Knuckles Unlock Text ES"
+      },
+      {
+        "name": "Knuckles Unlock Text IT"
+      },
+      {
+        "name": "Cream Unlock Text JP"
+      },
+      {
+        "name": "Cream Unlock Text EN"
+      },
+      {
+        "name": "Cream Unlock Text DE"
+      },
+      {
+        "name": "Cream Unlock Text FR"
+      },
+      {
+        "name": "Cream Unlock Text ES"
+      },
+      {
+        "name": "Cream Unlock Text IT"
+      },
+      {
+        "name": "Amy Unlock Text JP"
+      },
+      {
+        "name": "Amy Unlock Text EN"
+      },
+      {
+        "name": "Amy Unlock Text DE"
+      },
+      {
+        "name": "Amy Unlock Text FR"
+      },
+      {
+        "name": "Amy Unlock Text ES"
+      },
+      {
+        "name": "Amy Unlock Text IT"
+      },
+      {
+        "name": "BG 129"
+      },
+      {
+        "name": "Zone Complete Parallax",
+        "mode": 2
+      },
+      {
+        "name": "Intro Explosion"
+      },
+      {
+        "name": "Intro Parallax",
+        "mode": 2
+      },
+      {
+        "name": "Sega Logo"
+      },
+      {
+        "name": "Sonic Team Logo"
+      },
+      {
+        "name": "BG 135"
+      },
+      {
+        "name": "Tornado 2 Normal Frame 1",
+        "mode": 2
+      },
+      {
+        "name": "Tornado 2 Normal Frame 2",
+        "mode": 2
+      },
+      {
+        "name": "Tornado 2 Transformation Frame 1",
+        "mode": 2
+      },
+      {
+        "name": "Tornado 2 Transformation Frame 2",
+        "mode": 2
+      },
+      {
+        "name": "Tornado 2 Boost Frame 1",
+        "mode": 2
+      },
+      {
+        "name": "Tornado 2 Boost Frame 2",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 1 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 2 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 3 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 4 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 5 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 6 BG",
+        "mode": 2
+      },
+      {
+        "name": "Special Stage 7 BG",
+        "mode": 2
+      },
+      {
+        "name": "Chao Playground HUD JP"
+      },
+      {
+        "name": "Chao Playground HUD EN"
+      },
+      {
+        "name": "Chao Playground HUD DE"
+      },
+      {
+        "name": "Chao Playground HUD FR"
+      },
+      {
+        "name": "Chao Playground HUD ES"
+      },
+      {
+        "name": "Chao Playground HUD IT"
+      },
+      {
+        "name": "Chao Map HUD JP"
+      },
+      {
+        "name": "Chao Map HUD EN"
+      },
+      {
+        "name": "Chao Map HUD DE"
+      },
+      {
+        "name": "Chao Map HUD FR"
+      },
+      {
+        "name": "Chao Map HUD ES"
+      },
+      {
+        "name": "Chao Map HUD IT"
+      },
+      {
+        "name": "Chao Map Zones"
+      },
+      {
+        "name": "Chao Map BG"
+      },
+      {
+        "name": "Bonus 1 Info JP"
+      },
+      {
+        "name": "Bonus 1 Info EN"
+      },
+      {
+        "name": "Bonus 1 Info DE"
+      },
+      {
+        "name": "Bonus 1 Info FR"
+      },
+      {
+        "name": "Bonus 1 Info ES"
+      },
+      {
+        "name": "Bonus 1 Info IT"
+      },
+      {
+        "name": "Bonus 2 Info JP"
+      },
+      {
+        "name": "Bonus 2 Info EN"
+      },
+      {
+        "name": "Bonus 2 Info DE"
+      },
+      {
+        "name": "Bonus 2 Info FR"
+      },
+      {
+        "name": "Bonus 2 Info ES"
+      },
+      {
+        "name": "Bonus 2 Info IT"
+      },
+      {
+        "name": "Hyper Eggrobo Body"
+      },
+      {
+        "name": "Ultimate Gemerl Laser"
+      }
+    ],
+    "animationCount": 1524
+  }
+]
