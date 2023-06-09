@@ -1,0 +1,122 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "extensions",
+    "folders": [
+        "../Levels",
+        "../Backgrounds"
+    ],
+    "propertyTypes": [
+        {
+            "color": "#ffff0000",
+            "id": 3,
+            "members": [
+                {
+                    "name": "Data 1",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 2",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 3",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 4",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Type",
+                    "type": "int",
+                    "value": 0
+                }
+            ],
+            "name": "Enemy",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        },
+        {
+            "color": "#ff00ff00",
+            "id": 2,
+            "members": [
+                {
+                    "name": "Data 1",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 2",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 3",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Data 4",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "Type",
+                    "type": "int",
+                    "value": 0
+                }
+            ],
+            "name": "Interactable",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        },
+        {
+            "color": "#ff00ffff",
+            "id": 4,
+            "members": [
+                {
+                    "name": "Type",
+                    "type": "int",
+                    "value": 0
+                }
+            ],
+            "name": "Item",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        },
+        {
+            "color": "#ff0000ff",
+            "id": 1,
+            "members": [
+            ],
+            "name": "Player",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        },
+        {
+            "color": "#ffffff00",
+            "id": 5,
+            "members": [
+            ],
+            "name": "Ring",
+            "type": "class",
+            "useAs": [
+                "object"
+            ]
+        }
+    ]
+}
