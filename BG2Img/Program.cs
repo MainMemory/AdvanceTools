@@ -92,9 +92,10 @@ namespace BG2Img
 				if (anims == null) continue;
 				var maps = proj.GetSpriteMappings(an);
 				var attrs = proj.GetSpriteAttributes(an);
+				var vars = AnimationJson.Load(proj.SpriteAnimations[an]);
 				for (int sub = 0; sub < anims.Length; sub++)
 				{
-					var path = Path.ChangeExtension(proj.SpriteAnimations[an][sub], ".gif");
+					var path = Path.ChangeExtension(vars[sub], ".gif");
 					Console.WriteLine(path);
 					var anitiles = new BitmapBits[0];
 					var anipal = new Color[256];
