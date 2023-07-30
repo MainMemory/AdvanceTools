@@ -47,8 +47,8 @@ namespace AdvanceTools
 
 		public GBAColor[] GetSpritePalettes() => GBAColor.Load(SpritePalettes);
 
-		public byte[] GetSpriteTiles16() => File.ReadAllBytes(SpriteTiles16);
-		public byte[] GetSpriteTiles256() => File.ReadAllBytes(SpriteTiles256);
+		public byte[] GetSpriteTiles16() => SpriteTiles16 != null ? File.ReadAllBytes(SpriteTiles16) : null;
+		public byte[] GetSpriteTiles256() => SpriteTiles256 != null ? File.ReadAllBytes(SpriteTiles256) : null;
 	}
 
 	public class FileInfo

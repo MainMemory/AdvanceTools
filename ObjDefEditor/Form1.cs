@@ -37,12 +37,14 @@ namespace ObjDefEditor
 					levelsSelector.Items.AddRange(levelnames);
 					List<BitmapBits> sprtiles16 = new List<BitmapBits>();
 					var data = proj.GetSpriteTiles16();
-					for (var i = 0; i < data.Length; i += 32)
-						sprtiles16.Add(BitmapBits.FromTile4bpp(data, i));
+					if (data != null)
+						for (var i = 0; i < data.Length; i += 32)
+							sprtiles16.Add(BitmapBits.FromTile4bpp(data, i));
 					List<BitmapBits> sprtiles256 = new List<BitmapBits>();
 					data = proj.GetSpriteTiles256();
-					for (var i = 0; i < data.Length; i += 64)
-						sprtiles256.Add(BitmapBits.FromTile8bpp(data, i));
+					if (data != null)
+						for (var i = 0; i < data.Length; i += 64)
+							sprtiles256.Add(BitmapBits.FromTile8bpp(data, i));
 					var sprpal = proj.GetSpritePalettes().Select(a => a.RGBColor).ToArray();
 					var sprlst = new List<BmpOff[][]>(proj.SpriteAnimations.Length);
 					for (int an = 0; an < proj.SpriteAnimations.Length; an++)

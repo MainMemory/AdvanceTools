@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using AdvanceTools;
-using System.Drawing;
+﻿using AdvanceTools;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 
 namespace BG2Img
 {
@@ -30,11 +28,13 @@ namespace BG2Img
 			proj = ProjectFile.Load(filename);
 			Directory.SetCurrentDirectory(Path.GetDirectoryName(Path.GetFullPath(filename)));
 			var data = proj.GetSpriteTiles16();
-			for (var i = 0; i < data.Length; i += 32)
-				sprtiles16.Add(BitmapBits.FromTile4bpp(data, i));
+			if (data != null)
+				for (var i = 0; i < data.Length; i += 32)
+					sprtiles16.Add(BitmapBits.FromTile4bpp(data, i));
 			data = proj.GetSpriteTiles256();
-			for (var i = 0; i < data.Length; i += 64)
-				sprtiles256.Add(BitmapBits.FromTile8bpp(data, i));
+			if (data != null)
+				for (var i = 0; i < data.Length; i += 64)
+					sprtiles256.Add(BitmapBits.FromTile8bpp(data, i));
 			sprpal = proj.GetSpritePalettes().Select(a => a.RGBColor).ToArray();
 			var interactableSprites = ReadObjDefs("Interactables");
 			var itemSprites = ReadObjDefs("Items");
