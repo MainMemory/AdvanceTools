@@ -233,7 +233,7 @@ var readRings = function(filename, layer, tileset)
 
 var writeForegroundLayer = function(filename, layer)
 {
-	var txtfile = new TextFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(stginf.ForegroundHigh)), TextFile.ReadOnly);
+	var txtfile = new TextFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(filename)), TextFile.ReadOnly);
 	var info = JSON.parse(txtfile.readAll());
 	txtfile.close();
 
@@ -255,7 +255,7 @@ var writeForegroundLayer = function(filename, layer)
 
 		info.Width = layer.width;
 		info.Height = layer.height;
-		txtfile = new TextFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(stginf.ForegroundHigh)), TextFile.WriteOnly);
+		txtfile = new TextFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(filename)), TextFile.WriteOnly);
 		txtfile.write(JSON.stringify(info, null, 2));
 		txtfile.commit();
 	}
@@ -290,7 +290,7 @@ var writeObjects = function(filename, objects, width, height, hasType, dataCount
 		++objsize;
 	objsize += dataCount;
 	var regions = sortObjects(objects, width, height);
-	var file = new BinaryFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(info.Layout)), BinaryFile.WriteOnly);
+	var file = new BinaryFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(filename)), BinaryFile.WriteOnly);
 	file.seek(4);
 	var data = new Uint32Array(2);
 	data[0] = regions.width;
