@@ -36,7 +36,7 @@ namespace AdvanceTools
 				return null;
 			var anims = AnimationJson.Load(SpriteAnimations[id]);
 			AnimationCommand[][] result = new AnimationCommand[anims.Length][];
-			for (int i = 0; i < SpriteAnimations[id].Length; i++)
+			for (int i = 0; i < anims[id].Length; i++)
 				result[i] = AnimationCommand.LoadAnimation(File.ReadAllBytes(anims[i]), 0).ToArray();
 			return result;
 		}
