@@ -345,9 +345,16 @@ namespace AdvanceBuild
 					modifiedFiles.Add(filename, (int)romfile.Length);
 					romfile.Seek(0, SeekOrigin.End);
 					var bw = new BinaryWriter(romfile);
+					bw.Write(GetFilePointer(cljs.Heightmaps, project, modifiedFiles));
+					bw.Write(GetFilePointer(cljs.Angles, project, modifiedFiles));
 					bw.Write(GetFilePointer(cljs.Chunks, project, modifiedFiles));
+					bw.Write(GetFilePointer(cljs.ForegroundHigh, project, modifiedFiles));
+					bw.Write(GetFilePointer(cljs.ForegroundLow, project, modifiedFiles));
+					bw.Write(GetFilePointer(cljs.Flags, project, modifiedFiles));
 					bw.Write(cljs.Width);
 					bw.Write(cljs.Height);
+					bw.Write(cljs.WidthPixels);
+					bw.Write(cljs.HeightPixels);
 				}
 			}
 		}
