@@ -33,7 +33,7 @@ namespace ObjDefEditor
 				{
 					var proj = ProjectFile.Load(dlg.FileName);
 					Directory.SetCurrentDirectory(Path.GetDirectoryName(dlg.FileName));
-					levelnames = proj.Levels.Select(a => Path.GetFileNameWithoutExtension(a)).ToArray();
+					levelnames = proj.Levels.Select(a => Path.GetFileNameWithoutExtension(a) ?? "Unused Level").ToArray();
 					levelsSelector.Items.AddRange(levelnames);
 					List<BitmapBits> sprtiles16 = new List<BitmapBits>();
 					var data = proj.GetSpriteTiles16();
