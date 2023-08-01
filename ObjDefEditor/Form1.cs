@@ -50,15 +50,15 @@ namespace ObjDefEditor
 					for (int an = 0; an < proj.SpriteAnimations.Length; an++)
 					{
 						var anims = proj.GetSpriteAnimation(an);
-						if (anims == null)
+						var maps = proj.GetSpriteMappings(an);
+						var attrs = proj.GetSpriteAttributes(an);
+						if (anims == null || maps.Length == 0)
 						{
 							BmpOff bmpOff = new BmpOff();
 							sprlst.Add(new BmpOff[][] { new BmpOff[] { bmpOff } });
 							animationSelector.Images.Add(bmpOff.Bitmap);
 							continue;
 						}
-						var maps = proj.GetSpriteMappings(an);
-						var attrs = proj.GetSpriteAttributes(an);
 						var anmvars = new List<BmpOff[]>(anims.Length);
 						for (int sub = 0; sub < anims.Length; sub++)
 						{
