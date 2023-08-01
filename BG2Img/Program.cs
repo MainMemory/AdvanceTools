@@ -91,6 +91,7 @@ namespace BG2Img
 				var anims = proj.GetSpriteAnimation(an);
 				if (anims == null) continue;
 				var maps = proj.GetSpriteMappings(an);
+				if (maps.Length == 0) continue;
 				var attrs = proj.GetSpriteAttributes(an);
 				var vars = AnimationJson.Load(proj.SpriteAnimations[an]);
 				for (int sub = 0; sub < anims.Length; sub++)
