@@ -49,8 +49,8 @@ namespace AdvanceTools
 			{
 				var bw = new System.IO.BinaryWriter(ms);
 				bw.Write((data.Length << 8) | 0x30);
-				var run = new System.Collections.Generic.List<byte>();
-				for (int i = 1; i < data.Length; i++)
+				var run = new System.Collections.Generic.List<byte>(128);
+				for (int i = 0; i < data.Length; i++)
 				{
 					byte cur = data[i];
 					byte cnt = 1;
@@ -73,7 +73,7 @@ namespace AdvanceTools
 						run.Add(cur);
 						if (run.Count == 128)
 						{
-							bw.Write(127);
+							bw.Write((byte)127);
 							bw.Write(run.ToArray());
 							run.Clear();
 						}
