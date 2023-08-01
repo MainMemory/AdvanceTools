@@ -296,6 +296,7 @@ var writeObjects = function(filename, objects, width, height, hasType, dataCount
 	data[0] = regions.width;
 	data[1] = regions.height;
 	file.write(data.buffer);
+	file.write(new ArrayBuffer(regions.width * regions.height * 4));
 	var ptroff = 0xC;
 	var objoff = regions.width * regions.height * 4 + 0xC;
 	for (var y = 0; y < regions.height; ++y) {
@@ -319,6 +320,9 @@ var writeObjects = function(filename, objects, width, height, hasType, dataCount
 						data[di++] = obj.resolvedProperty("Data " + (dn + 1));
 					file.write(data.buffer);
 				}
+				data = new Uint8Array(1);
+				data[0] = 0xFF;
+				file.write(data.buffer);
 				objoff = file.pos;
 			}
 			ptroff += 4;

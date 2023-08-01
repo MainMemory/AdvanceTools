@@ -164,7 +164,7 @@ var salvMapFormat = {
 						writeForegroundLayer(stginf.ForegroundLow, layer);
 					break;
 				case "Objects":
-					if (layer.isObjectGroup) {
+					if (layer.isObjectLayer) {
 						var interactables = new Array();
 						var items = new Array();
 						var enemies = new Array();
@@ -192,13 +192,13 @@ var salvMapFormat = {
 							}
 						}
 						if (stginf.Interactables != null)
-							writeInteractables(stginf.Interactables, interactables, map.width, map.height);
+							writeInteractables(stginf.Interactables, interactables, map.width * map.tileWidth, map.height * map.tileHeight);
 						if (stginf.Items != null)
-							writeItems(stginf.Items, items, map.width, map.height);
+							writeItems(stginf.Items, items, map.width * map.tileWidth, map.height * map.tileHeight);
 						if (stginf.Enemies != null)
-							writeEnemies(stginf.Enemies, enemies, map.width, map.height);
+							writeEnemies(stginf.Enemies, enemies, map.width * map.tileWidth, map.height * map.tileHeight);
 						if (stginf.Rings != null)
-							writeRings(stginf.Rings, rings, map.width, map.height);
+							writeRings(stginf.Rings, rings, map.width * map.tileWidth, map.height * map.tileHeight);
 						if (stginf.PlayerStart != null) {
 							var data = new Uint16Array(2);
 							if (start != null) {
