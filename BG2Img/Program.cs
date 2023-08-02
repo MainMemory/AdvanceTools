@@ -67,7 +67,7 @@ namespace BG2Img
 				if (bg1 != null)
 					BackgroundToImage(bg1, palette, lvinf.Background1);
 				if (bg2 != null)
-					BackgroundToImage(bg1, palette, lvinf.Background1);
+					BackgroundToImage(bg2, palette, lvinf.Background2);
 				palette[0] = Color.Transparent;
 				if (fghigh != null)
 					ForegroundToImage(fghigh, palette, lvinf.ForegroundHigh, proj.Game);
