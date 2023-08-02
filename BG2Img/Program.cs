@@ -57,17 +57,7 @@ namespace BG2Img
 				var bg1 = lvinf.GetBackground1();
 				var bg2 = lvinf.GetBackground2();
 				var col = lvinf.GetCollision();
-				if (proj.Game == 3 && proj.Levels[lv].EndsWith("Map.salv"))
-				{
-					if (bg1 != null)
-						CopyPalette(bg1, palette);
-					if (bg2 != null)
-						CopyPalette(bg2, palette);
-				}
-				if (bg1 != null)
-					BackgroundToImage(bg1, palette, lvinf.Background1);
-				if (bg2 != null)
-					BackgroundToImage(bg1, palette, lvinf.Background1);
+				var trcl = palette[0];
 				palette[0] = Color.Transparent;
 				if (fghigh != null)
 					ForegroundToImage(fghigh, palette, lvinf.ForegroundHigh, proj.Game);
@@ -75,6 +65,17 @@ namespace BG2Img
 					ForegroundToImage(fglow, palette, lvinf.ForegroundLow, proj.Game);
 				if (col != null)
 					CollisionToImage(col, lvinf.Collision, proj.Game);
+				palette[0] = trcl;
+				if (bg1 != null)
+				{
+					CopyPalette(bg1, palette);
+					BackgroundToImage(bg1, palette, lvinf.Background1);
+				}
+				if (bg2 != null)
+				{
+					CopyPalette(bg2, palette);
+					BackgroundToImage(bg2, palette, lvinf.Background2);
+				}
 			}
 			for (int bg = 0; bg < proj.Backgrounds.Length; bg++)
 			{
