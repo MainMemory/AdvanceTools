@@ -70,7 +70,7 @@ namespace AdvanceBuild
 						ProcessBGLayer(lvjs.Background1, romfile, project, modifiedFiles);
 						if (project.Game == 3)
 							ProcessBGLayer(lvjs.Background2, romfile, project, modifiedFiles);
-						ProcessCollision(lvjs.Collision, romfile, project, modifiedFiles);
+						ProcessCollision(lvjs.Collision, romfile, project, modifiedFiles, project.Game);
 						CheckCompressedFileData(lvjs.Interactables, romfile, project, modifiedFiles);
 						CheckCompressedFileData(lvjs.Items, romfile, project, modifiedFiles);
 						CheckCompressedFileData(lvjs.Enemies, romfile, project, modifiedFiles);
@@ -328,7 +328,7 @@ namespace AdvanceBuild
 			}
 		}
 
-		private static void ProcessCollision(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles)
+		private static void ProcessCollision(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles, int game)
 		{
 			if (filename != null && !modifiedFiles.ContainsKey(filename))
 			{
@@ -353,8 +353,16 @@ namespace AdvanceBuild
 					bw.Write(GetFilePointer(cljs.Flags, project, modifiedFiles));
 					bw.Write(cljs.Width);
 					bw.Write(cljs.Height);
-					bw.Write(cljs.WidthPixels);
-					bw.Write(cljs.HeightPixels);
+					if (game == 1)
+					{
+						bw.Write((ushort)cljs.WidthPixels);
+						bw.Write((ushort)cljs.HeightPixels);
+					}
+					else
+					{
+						bw.Write(cljs.WidthPixels);
+						bw.Write(cljs.HeightPixels);
+					}
 				}
 			}
 		}

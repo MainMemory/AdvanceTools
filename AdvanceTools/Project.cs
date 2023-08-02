@@ -103,8 +103,8 @@ namespace AdvanceTools
 		public string Flags { get; set; }
 		public ushort Width { get; set; }
 		public ushort Height { get; set; }
-		public ushort WidthPixels { get; set; }
-		public ushort HeightPixels { get; set; }
+		public uint WidthPixels { get; set; }
+		public uint HeightPixels { get; set; }
 
 		public CollisionJson() { }
 

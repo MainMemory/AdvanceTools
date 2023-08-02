@@ -487,10 +487,10 @@ namespace AdvanceTools
 		public int Flags { get; set; }
 		public ushort Width { get; set; }
 		public ushort Height { get; set; }
-		public ushort WidthPixels { get; set; }
-		public ushort HeightPixels { get; set; }
+		public uint WidthPixels { get; set; }
+		public uint HeightPixels { get; set; }
 
-		public LevelCollision(byte[] file, int address)
+		public LevelCollision(byte[] file, int address, int game)
 		{
 			Address = address;
 			Heightmaps = Utility.GetPointer(file, address);
@@ -501,8 +501,16 @@ namespace AdvanceTools
 			Flags = Utility.GetPointer(file, address + 0x14);
 			Width = BitConverter.ToUInt16(file, address + 0x18);
 			Height = BitConverter.ToUInt16(file, address + 0x1A);
-			WidthPixels = BitConverter.ToUInt16(file, address + 0x1C);
-			HeightPixels = BitConverter.ToUInt16(file, address + 0x1E);
+			if (game == 1)
+			{
+				WidthPixels = BitConverter.ToUInt16(file, address + 0x1C);
+				HeightPixels = BitConverter.ToUInt16(file, address + 0x1E);
+			}
+			else
+			{
+				WidthPixels = BitConverter.ToUInt32(file, address + 0x1C);
+				HeightPixels = BitConverter.ToUInt32(file, address + 0x20);
+			}
 		}
 
 		private ushort[,] ReadLayout(byte[] file, int game, int layout)

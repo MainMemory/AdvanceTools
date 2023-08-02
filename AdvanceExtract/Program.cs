@@ -124,7 +124,7 @@ namespace AdvanceExtract
 					if (!fileList.ContainsKey(ptr))
 					{
 						if (ptr != 0)
-							json.Collision = ProcessCollision(file, extract, lvlname, new LevelCollision(file, ptr), game.Game);
+							json.Collision = ProcessCollision(file, extract, lvlname, new LevelCollision(file, ptr, game.Game), game.Game);
 					}
 					else
 						json.Collision = fileList[ptr];
