@@ -280,7 +280,7 @@ namespace AdvanceBuild
 			bw.Write((uint)new System.IO.FileInfo(layerjs.Tiles).Length);
 			bw.Write(GetFilePointer(layerjs.Palette, project, modifiedFiles));
 			bw.Write(layerjs.PalDest);
-			bw.Write((ushort)(new System.IO.FileInfo(layerjs.Palette).Length / 2));
+			bw.Write((ushort)(layerjs.Palette != null ? new System.IO.FileInfo(layerjs.Palette).Length / 2 : 0));
 		}
 
 		private static void ProcessFGLayer(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles)
