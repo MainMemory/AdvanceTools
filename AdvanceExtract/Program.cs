@@ -287,7 +287,7 @@ namespace AdvanceExtract
 						{
 							path = Path.Combine("Sprites", "Animations", $"{i}.sanm");
 							animfiles.Add(path);
-							File.WriteAllText(Path.Combine(extract, path), JsonConvert.SerializeObject(anmvars.ToArray()));
+							AnimationJson.Save(Path.Combine(extract, path), anmvars.ToArray());
 							fileList.Add(anims.Address, path);
 						}
 						else
@@ -440,7 +440,7 @@ namespace AdvanceExtract
 			else
 				json.Layout = fileList[layer.Layout];
 			string result = Path.Combine("Foregrounds", name + ".safg");
-			File.WriteAllText(Path.Combine(extract, result), JsonConvert.SerializeObject(json));
+			json.Save(Path.Combine(extract, result));
 			fileList.Add(layer.Address, result);
 			return result;
 		}
@@ -463,7 +463,7 @@ namespace AdvanceExtract
 			else
 				json.Layout = fileList[layer.Layout];
 			string result = Path.Combine("Backgrounds", name + ".sabg");
-			File.WriteAllText(Path.Combine(extract, result), JsonConvert.SerializeObject(json));
+			json.Save(Path.Combine(extract, result));
 			fileList.Add(layer.Address, result);
 			return result;
 		}
@@ -546,7 +546,7 @@ namespace AdvanceExtract
 			else
 				json.Flags = fileList[collision.Flags];
 			string result = Path.Combine("Collision", "Info", name + ".sacl");
-			File.WriteAllText(Path.Combine(extract, result), JsonConvert.SerializeObject(json));
+			json.Save(Path.Combine(extract, result));
 			fileList.Add(collision.Address, result);
 			return result;
 		}
