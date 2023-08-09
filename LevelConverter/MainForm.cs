@@ -103,6 +103,7 @@ namespace LevelConverter
 		private void ProcessFGLayout(string layout, int srcgame, int dstgame)
 		{
 			if ((srcgame == 1) ^ (dstgame == 1))
+			{
 				if (layout != null && !processedFiles.Contains(layout))
 				{
 					using (FileStream srcfs = File.OpenRead(Path.Combine(srcpath, layout)))
@@ -119,8 +120,9 @@ namespace LevelConverter
 					}
 					processedFiles.Add(layout);
 				}
-				else
-					ProcessGenericFile(layout);
+			}
+			else
+				ProcessGenericFile(layout);
 		}
 
 		private void ProcessBGLayer(string layerfn)
