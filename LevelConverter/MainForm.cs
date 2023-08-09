@@ -149,16 +149,16 @@ namespace LevelConverter
 				if (emptyObjects.Checked)
 				{
 					if (dstgame == 3)
-						File.WriteAllBytes(Path.Combine(dstpath, filename), Entry.WriteLayoutCompressed(new List<Data5Entry>()));
+						Entry.WriteLayout(new List<Data5Entry>(), Path.Combine(dstpath, filename));
 					else
-						File.WriteAllBytes(Path.Combine(dstpath, filename), Entry.WriteLayoutCompressed(new List<Data4Entry>()));
+						Entry.WriteLayout(new List<Data4Entry>(), Path.Combine(dstpath, filename));
 				}
 				else
 				{
 					if ((srcgame == 3) ^ (dstgame == 3))
 					{
 						if (srcgame == 3)
-							Entry.WriteLayoutCompressed(Entry.ReadLayoutCompressed<InteractableEntry3>(Path.Combine(srcpath, filename)).Select(a => new InteractableEntry12()
+							Entry.WriteLayout(Entry.ReadLayout<InteractableEntry3>(Path.Combine(srcpath, filename)).Select(a => new InteractableEntry12()
 							{
 								X = a.X,
 								Y = a.Y,
@@ -169,7 +169,7 @@ namespace LevelConverter
 								Data4 = a.Data4
 							}).ToList(), Path.Combine(dstpath, filename));
 						else
-							Entry.WriteLayoutCompressed(Entry.ReadLayoutCompressed<InteractableEntry12>(Path.Combine(srcpath, filename)).Select(a => new InteractableEntry3()
+							Entry.WriteLayout(Entry.ReadLayout<InteractableEntry12>(Path.Combine(srcpath, filename)).Select(a => new InteractableEntry3()
 							{
 								X = a.X,
 								Y = a.Y,
