@@ -203,7 +203,7 @@ namespace AdvanceTools
 		}
 	}
 
-	public abstract class LayerJsonBase
+	public abstract class LayerJsonBase : JsonBase
 	{
 		public string AniTiles { get; set; }
 		public ushort AniTilesSize { get; set; }

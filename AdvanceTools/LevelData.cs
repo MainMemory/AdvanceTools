@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -600,6 +601,92 @@ namespace AdvanceTools
 			result[0] = (byte)(X % 256 / 8);
 			result[1] = (byte)(Y % 256 / 8);
 			return result;
+		}
+
+		public static List<T> ReadLayoutCompressed<T>(string filename) where T : Entry, new() => ReadLayoutCompressed<T>(System.IO.File.ReadAllBytes(filename));
+
+		public static List<T> ReadLayoutCompressed<T>(byte[] file, int address = 0) where T : Entry, new() => ReadLayout<T>(Utility.DecompressRLData(file, address));
+
+		public static List<T> ReadLayout<T>(string filename) where T : Entry, new() => ReadLayout<T>(System.IO.File.ReadAllBytes(filename));
+
+		public static List<T> ReadLayout<T>(byte[] file, int address = 0) where T : Entry, new()
+		{
+			List<T> result = new List<T>();
+			var width = BitConverter.ToInt32(file, address + 4);
+			var height = BitConverter.ToInt32(file, address + 8);
+			for (var ry = 0; ry < height; ++ry)
+				for (var rx = 0; rx < width; ++rx)
+				{
+					var off = BitConverter.ToInt32(file, address + 0xC + ((ry * width) + rx) * 4);
+					if (off != 0)
+					{
+						off += 4 + address;
+						while (file[off] != 0xFF)
+						{
+							var obj = new T();
+							obj.Load(file, off, rx, ry);
+							off += obj.ByteSize;
+							result.Add(obj);
+						}
+					}
+				}
+			return result;
+		}
+
+		public static void WriteLayoutCompressed<T>(List<T> items, string filename) where T : Entry => System.IO.File.WriteAllBytes(filename, WriteLayoutCompressed(items));
+
+		public static byte[] WriteLayoutCompressed<T>(List<T> items) where T : Entry => Utility.CompressRLData(WriteLayout(items));
+
+		public static void WriteLayout<T>(List<T> items, string filename) where T : Entry => System.IO.File.WriteAllBytes(filename, WriteLayout(items));
+
+		public static byte[] WriteLayout<T>(List<T> items) where T : Entry
+		{
+			using (var ms = new System.IO.MemoryStream())
+			using (var bw = new System.IO.BinaryWriter(ms))
+			{
+				if (items.Count == 0)
+				{
+					bw.Write(0x10);
+					bw.Write(1);
+					bw.Write(1);
+					bw.Write(0);
+					return ms.ToArray();
+				}
+				var xrgns = (items.Max(a => a.X) + 255) / 256;
+				var yrgns = (items.Max(a => a.Y) + 255) / 256;
+				var regions = new List<T>[xrgns, yrgns];
+				for (var y = 0; y < yrgns; y++)
+					for (var x = 0; x < xrgns; x++)
+						regions[x, y] = new List<T>();
+				foreach (var obj in items)
+					if (obj.X >= 0 && obj.Y >= 0)
+						regions[obj.X / 256, obj.Y / 256].Add(obj);
+				bw.Write(0);
+				bw.Write(xrgns);
+				bw.Write(yrgns);
+				bw.Write(new byte[xrgns * yrgns * 4]);
+				var ptroff = 0xC;
+				long objoff = xrgns * yrgns * 4 + 0xC;
+				for (var y = 0; y < yrgns; ++y)
+					for (var x = 0; x < xrgns; ++x)
+					{
+						var list = regions[x, y];
+						if (list.Count > 0)
+						{
+							ms.Seek(ptroff, System.IO.SeekOrigin.Begin);
+							bw.Write(objoff - 4);
+							ms.Seek(objoff, System.IO.SeekOrigin.Begin);
+							foreach (var obj in list)
+								bw.Write(obj.GetBytes());
+							bw.Write((byte)0xFF);
+							objoff = ms.Position;
+						}
+						ptroff += 4;
+					}
+				ms.Seek(0, System.IO.SeekOrigin.Begin);
+				bw.Write((uint)ms.Length);
+				return ms.ToArray();
+			}
 		}
 	}
 
