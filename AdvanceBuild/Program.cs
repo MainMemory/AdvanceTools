@@ -55,6 +55,9 @@ namespace AdvanceBuild
 				romfile = File.Open(rompath, FileMode.Open, FileAccess.ReadWrite);
 			using (romfile)
 			{
+				romfile.Seek(0, SeekOrigin.End);
+				while (romfile.Length % 4 != 0)
+					romfile.WriteByte(0);
 				var bw = new BinaryWriter(romfile);
 				var project = ProjectFile.Load(projpath);
 				Directory.SetCurrentDirectory(Path.GetDirectoryName(projpath));
@@ -233,6 +236,8 @@ namespace AdvanceBuild
 						modifiedFiles.Add(filename, (int)romfile.Length);
 						romfile.Seek(0, SeekOrigin.End);
 						romfile.Write(data, 0, data.Length);
+						while (romfile.Length % 4 != 0)
+							romfile.WriteByte(0);
 						return true;
 					}
 				}
@@ -303,6 +308,8 @@ namespace AdvanceBuild
 					bw.Write(GetFilePointer(fgjs.Layout, project, modifiedFiles));
 					bw.Write(fgjs.Width);
 					bw.Write(fgjs.Height);
+					while (romfile.Length % 4 != 0)
+						romfile.WriteByte(0);
 				}
 			}
 		}
@@ -324,6 +331,8 @@ namespace AdvanceBuild
 					bw.Write(bgjs.Height);
 					WriteLayerDataCommon(bgjs, romfile, project, modifiedFiles);
 					bw.Write(GetFilePointer(bgjs.Layout, project, modifiedFiles));
+					while (romfile.Length % 4 != 0)
+						romfile.WriteByte(0);
 				}
 			}
 		}
@@ -363,6 +372,8 @@ namespace AdvanceBuild
 						bw.Write(cljs.WidthPixels);
 						bw.Write(cljs.HeightPixels);
 					}
+					while (romfile.Length % 4 != 0)
+						romfile.WriteByte(0);
 				}
 			}
 		}
@@ -379,6 +390,8 @@ namespace AdvanceBuild
 					modifiedFiles.Add(filename, (int)romfile.Length);
 					romfile.Seek(0, SeekOrigin.End);
 					romfile.Write(data, 0, data.Length);
+					while (romfile.Length % 4 != 0)
+						romfile.WriteByte(0);
 				}
 			}
 		}
