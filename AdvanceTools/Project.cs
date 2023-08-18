@@ -56,13 +56,15 @@ namespace AdvanceTools
 		[JsonConverter(typeof(IntHexConverter))]
 		public int Address { get; set; }
 		public string Hash { get; set; }
+		public uint Size { get; set; }
 
 		public FileInfo() { }
 
-		public FileInfo(int address, string hash)
+		public FileInfo(int address, string hash, uint size)
 		{
 			Address = address;
 			Hash = hash;
+			Size = size;
 		}
 	}
 

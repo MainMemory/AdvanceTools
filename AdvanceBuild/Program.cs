@@ -1,26 +1,25 @@
-﻿using System;
+﻿using AdvanceTools;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdvanceTools;
+using System.IO.Compression;
 
 namespace AdvanceBuild
 {
 	static class Program
 	{
+		static bool patchmode;
 		static void Main(string[] args)
 		{
 			string projpath;
 			if (args.Length > 0)
 			{
 				projpath = args[0];
-				Console.WriteLine("Project: {0}", projpath);
+				Console.WriteLine("Project/Patch: {0}", projpath);
 			}
 			else
 			{
-				Console.Write("Project: ");
+				Console.Write("Project/Patch: ");
 				projpath = Console.ReadLine().Trim('"');
 			}
 			projpath = Path.GetFullPath(projpath);
@@ -42,8 +41,19 @@ namespace AdvanceBuild
 				outrom = Path.GetFullPath(args[2]);
 				Console.WriteLine("Output ROM: {0}", outrom);
 			}
+			else if (!Path.GetFileNameWithoutExtension(projpath).Equals(Path.GetFileNameWithoutExtension(rompath), StringComparison.OrdinalIgnoreCase))
+				outrom = Path.Combine(Path.GetDirectoryName(rompath), Path.ChangeExtension(Path.GetFileName(projpath), ".gba"));
 			else
 				outrom = Path.ChangeExtension(Path.ChangeExtension(rompath, null) + "_mod", ".gba");
+			if (Path.GetExtension(projpath).Equals(".sapatch", StringComparison.OrdinalIgnoreCase))
+			{
+				patchmode = true;
+				string tmppath = Path.Combine(Path.GetTempPath(), "sapatchtmp");
+				if (Directory.Exists(tmppath))
+					Directory.Delete(tmppath, true);
+				ZipFile.ExtractToDirectory(projpath, tmppath);
+				projpath = Path.Combine(tmppath, "Info.saproj");
+			}
 			FileStream romfile;
 			if (!rompath.Equals(outrom, StringComparison.OrdinalIgnoreCase))
 			{
@@ -83,7 +93,7 @@ namespace AdvanceBuild
 					ProcessBGLayer(bg, romfile, project, modifiedFiles);
 				var animsmod = false;
 				foreach (string filename in project.SpriteAnimations)
-					if (filename != null && !modifiedFiles.ContainsKey(filename))
+					if (filename != null && !modifiedFiles.ContainsKey(filename) && File.Exists(filename))
 					{
 						var animvars = AnimationJson.Load(filename);
 						var modified = false;
@@ -184,7 +194,7 @@ namespace AdvanceBuild
 					for (int i = 0; i < startptrs.Length; i++)
 						startptrs[i] = br.ReadInt32();
 					for (int i = 0; i < startptrs.Length; i++)
-						if (startptrs[i] != 0 && levels[i] != null)
+						if (startptrs[i] != 0 && levels[i] != null && File.Exists(levels[i].PlayerStart))
 						{
 							romfile.Seek(startptrs[i] - 0x8000000, SeekOrigin.Begin);
 							bw.Write(File.ReadAllBytes(levels[i].PlayerStart));
@@ -193,7 +203,12 @@ namespace AdvanceBuild
 				else
 					foreach (var lvjs in levels)
 						if (lvjs != null)
-							bw.Write(File.ReadAllBytes(lvjs.PlayerStart));
+						{
+							if (File.Exists(lvjs.PlayerStart))
+								bw.Write(File.ReadAllBytes(lvjs.PlayerStart));
+							else
+								romfile.Seek(4, SeekOrigin.Current);
+						}
 						else
 							bw.Write(0);
 				romfile.Seek(project.Version.SpriteTable, SeekOrigin.Begin);
@@ -213,6 +228,11 @@ namespace AdvanceBuild
 				bw.Write(GetFilePointer(project.SpriteTiles16, project, modifiedFiles));
 				bw.Write(GetFilePointer(project.SpriteTiles256, project, modifiedFiles));
 			}
+			if (patchmode)
+			{
+				Directory.SetCurrentDirectory(Path.GetDirectoryName(outrom));
+				Directory.Delete(Path.GetDirectoryName(projpath), true);
+			}
 		}
 
 		private static int GetFilePointer(string filename, ProjectFile project, Dictionary<string, int> modifiedFiles)
@@ -229,16 +249,19 @@ namespace AdvanceBuild
 			if (filename != null)
 				if (!modifiedFiles.ContainsKey(filename))
 				{
-					var data = File.ReadAllBytes(filename);
-					if (!project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashBytes(data))
+					if (File.Exists(filename))
 					{
-						Console.WriteLine(filename);
-						modifiedFiles.Add(filename, (int)romfile.Length);
-						romfile.Seek(0, SeekOrigin.End);
-						romfile.Write(data, 0, data.Length);
-						while (romfile.Length % 4 != 0)
-							romfile.WriteByte(0);
-						return true;
+						var data = File.ReadAllBytes(filename);
+						if (patchmode || !project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashBytes(data))
+						{
+							Console.WriteLine(filename);
+							modifiedFiles.Add(filename, (int)romfile.Length);
+							romfile.Seek(0, SeekOrigin.End);
+							romfile.Write(data, 0, data.Length);
+							while (romfile.Length % 4 != 0)
+								romfile.WriteByte(0);
+							return true;
+						}
 					}
 				}
 				else
@@ -252,20 +275,23 @@ namespace AdvanceBuild
 			if (layerjs.Tiles != null)
 				if (!modifiedFiles.ContainsKey(layerjs.Tiles))
 				{
-					var tiles = layerjs.GetTiles();
-					var anitiles = layerjs.GetAniTiles();
-					bool modified = !project.Hashes.TryGetValue(layerjs.Tiles, out var hash) || hash.Hash != Utility.HashBytes(tiles);
-					if (!modified && anitiles != null)
-						modified = !project.Hashes.TryGetValue(layerjs.AniTiles, out hash) || hash.Hash != Utility.HashBytes(anitiles);
-					if (modified)
+					if (File.Exists(layerjs.Tiles))
 					{
-						Console.WriteLine(layerjs.Tiles);
-						modifiedFiles.Add(layerjs.Tiles, (int)romfile.Length);
-						romfile.Seek(0, SeekOrigin.End);
-						romfile.Write(tiles, 0, tiles.Length);
-						if (anitiles != null)
-							romfile.Write(anitiles, 0, anitiles.Length);
-						result = true;
+						var tiles = layerjs.GetTiles();
+						var anitiles = layerjs.GetAniTiles();
+						bool modified = patchmode || !project.Hashes.TryGetValue(layerjs.Tiles, out var hash) || hash.Hash != Utility.HashBytes(tiles);
+						if (!modified && anitiles != null)
+							modified = !project.Hashes.TryGetValue(layerjs.AniTiles, out hash) || hash.Hash != Utility.HashBytes(anitiles);
+						if (modified)
+						{
+							Console.WriteLine(layerjs.Tiles);
+							modifiedFiles.Add(layerjs.Tiles, (int)romfile.Length);
+							romfile.Seek(0, SeekOrigin.End);
+							romfile.Write(tiles, 0, tiles.Length);
+							if (anitiles != null)
+								romfile.Write(anitiles, 0, anitiles.Length);
+							result = true;
+						}
 					}
 				}
 				else
@@ -282,18 +308,31 @@ namespace AdvanceBuild
 			bw.Write(layerjs.AnimFrameCount);
 			bw.Write(layerjs.AnimDelay);
 			bw.Write(GetFilePointer(layerjs.Tiles, project, modifiedFiles));
-			bw.Write((uint)new System.IO.FileInfo(layerjs.Tiles).Length);
+			bw.Write(GetFileSize(layerjs.Tiles, project));
 			bw.Write(GetFilePointer(layerjs.Palette, project, modifiedFiles));
 			bw.Write(layerjs.PalDest);
-			bw.Write((ushort)(layerjs.Palette != null ? new System.IO.FileInfo(layerjs.Palette).Length / 2 : 0));
+			bw.Write((ushort)(GetFileSize(layerjs.Palette, project) / 2));
+		}
+
+		private static uint GetFileSize(string filename, ProjectFile project)
+		{
+			if (filename != null)
+			{
+				if (File.Exists(filename))
+					return (uint)new System.IO.FileInfo(filename).Length;
+				else
+					return project.Hashes[filename].Size;
+			}
+			return 0;
 		}
 
 		private static void ProcessFGLayer(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles)
 		{
-			if (filename != null && !modifiedFiles.ContainsKey(filename))
+			if (filename != null && !modifiedFiles.ContainsKey(filename) && File.Exists(filename))
 			{
 				var fgjs = ForegroundLayerJson.Load(filename);
 				if ((ProcessLayerCommon(fgjs, romfile, project, modifiedFiles) | CheckFileData(fgjs.Chunks, romfile, project, modifiedFiles))
+					|| patchmode
 					|| !project.Hashes.TryGetValue(filename, out var hash)
 					|| hash.Hash != Utility.HashFile(filename))
 				{
@@ -316,10 +355,11 @@ namespace AdvanceBuild
 
 		private static void ProcessBGLayer(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles)
 		{
-			if (filename != null && !modifiedFiles.ContainsKey(filename))
+			if (filename != null && !modifiedFiles.ContainsKey(filename) && File.Exists(filename))
 			{
 				var bgjs = BackgroundLayerJson.Load(filename);
 				if (ProcessLayerCommon(bgjs, romfile, project, modifiedFiles)
+					|| patchmode
 					|| !project.Hashes.TryGetValue(filename, out var hash)
 					|| hash.Hash != Utility.HashFile(filename))
 				{
@@ -339,7 +379,7 @@ namespace AdvanceBuild
 
 		private static void ProcessCollision(string filename, Stream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles, int game)
 		{
-			if (filename != null && !modifiedFiles.ContainsKey(filename))
+			if (filename != null && !modifiedFiles.ContainsKey(filename) && File.Exists(filename))
 			{
 				var cljs = CollisionJson.Load(filename);
 				bool modified = CheckFileData(cljs.Heightmaps, romfile, project, modifiedFiles);
@@ -348,7 +388,7 @@ namespace AdvanceBuild
 				modified |= CheckFileData(cljs.ForegroundHigh, romfile, project, modifiedFiles);
 				modified |= CheckFileData(cljs.ForegroundLow, romfile, project, modifiedFiles);
 				modified |= CheckFileData(cljs.Flags, romfile, project, modifiedFiles);
-				if (modified || !project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashFile(filename))
+				if (modified || patchmode || !project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashFile(filename))
 				{
 					Console.WriteLine(filename);
 					modifiedFiles.Add(filename, (int)romfile.Length);
@@ -380,10 +420,10 @@ namespace AdvanceBuild
 
 		private static void CheckCompressedFileData(string filename, FileStream romfile, ProjectFile project, Dictionary<string, int> modifiedFiles)
 		{
-			if (filename != null && !modifiedFiles.ContainsKey(filename))
+			if (filename != null && !modifiedFiles.ContainsKey(filename) && File.Exists(filename))
 			{
 				var data = File.ReadAllBytes(filename);
-				if (!project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashBytes(data))
+				if (patchmode || !project.Hashes.TryGetValue(filename, out var hash) || hash.Hash != Utility.HashBytes(data))
 				{
 					Console.WriteLine(filename);
 					data = Utility.CompressRLData(data);

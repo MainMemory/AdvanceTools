@@ -362,7 +362,7 @@ namespace AdvanceExtract
 			}
 			proj.Hashes = new Dictionary<string, AdvanceTools.FileInfo>(fileList.Count);
 			foreach (var fn in fileList)
-				proj.Hashes.Add(fn.Value, new AdvanceTools.FileInfo(fn.Key, Utility.HashFile(Path.Combine(extract, fn.Value))));
+				proj.Hashes.Add(fn.Value, new AdvanceTools.FileInfo(fn.Key, Utility.HashFile(Path.Combine(extract, fn.Value)), (uint)new System.IO.FileInfo(Path.Combine(extract, fn.Value)).Length));
 			proj.Save(Path.Combine(extract, Path.GetFileNameWithoutExtension(filename) + ".saproj"));
 		}
 

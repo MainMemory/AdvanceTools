@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvanceBuild", "AdvanceBuil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelConverter", "LevelConverter\LevelConverter.csproj", "{926B7DEB-B37B-4E5E-8C5D-68FD4DD301F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatchGen", "PatchGen\PatchGen.csproj", "{15BF57F8-06C5-4FF6-A3D3-C64CEEABCD6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{926B7DEB-B37B-4E5E-8C5D-68FD4DD301F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926B7DEB-B37B-4E5E-8C5D-68FD4DD301F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926B7DEB-B37B-4E5E-8C5D-68FD4DD301F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15BF57F8-06C5-4FF6-A3D3-C64CEEABCD6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15BF57F8-06C5-4FF6-A3D3-C64CEEABCD6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15BF57F8-06C5-4FF6-A3D3-C64CEEABCD6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15BF57F8-06C5-4FF6-A3D3-C64CEEABCD6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
