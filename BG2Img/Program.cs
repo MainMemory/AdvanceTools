@@ -87,22 +87,32 @@ namespace BG2Img
 				CopyPalette(bginf, palette);
 				BackgroundToImage(bginf, palette, proj.Backgrounds[bg]);
 			}
+			Directory.CreateDirectory(Path.Combine("imgexport", "Sprites", "Animations"));
 			for (int an = 0; an < proj.SpriteAnimations.Length; an++)
 			{
 				var anims = proj.GetSpriteAnimation(an);
-				if (anims == null) continue;
+				if (anims == null)
+				{
+					Console.WriteLine("Null animation {0}!", an);
+					continue;
+				}
 				var maps = proj.GetSpriteMappings(an);
-				if (maps.Length == 0) continue;
+				if (maps.Length == 0)
+				{
+					Console.WriteLine("No mappings frames found for anim {0}!", an);
+					continue;
+				}
 				var attrs = proj.GetSpriteAttributes(an);
 				var vars = AnimationJson.Load(proj.SpriteAnimations[an]);
 				for (int sub = 0; sub < anims.Length; sub++)
 				{
-					var path = Path.ChangeExtension(vars[sub], ".gif");
+					var path = Path.Combine("imgexport", Path.ChangeExtension(vars[sub], ".gif"));
 					Console.WriteLine(path);
 					var anitiles = new BitmapBits[0];
 					var anipal = new Color[256];
 					anipal.Fill(Color.Black);
 					anipal[0] = Color.Transparent;
+					bool hasframe = false;
 					int xmin = int.MaxValue;
 					int xmax = int.MinValue;
 					int ymin = int.MaxValue;
@@ -113,6 +123,7 @@ namespace BG2Img
 							case AnimationCommandDrawFrame acdf:
 								if (acdf.MappingIndex != -1)
 								{
+									hasframe = true;
 									var mf = maps[acdf.MappingIndex];
 									for (int sp = 0; sp < mf.SpriteCount; sp++)
 									{
@@ -124,10 +135,22 @@ namespace BG2Img
 										ymax = Math.Max(ymax, -mf.Y + sa.Y + size.Height * 8);
 									}
 								}
+								else
+									Console.WriteLine("Invalid mapping frame in anim {0}-{1}!", an, sub);
+								break;
+							case AnimationCommandHitbox achb:
+								xmin = Math.Min(xmin, achb.Left);
+								xmax = Math.Max(xmax, achb.Right);
+								ymin = Math.Min(ymin, achb.Top);
+								ymax = Math.Max(ymax, achb.Bottom);
 								break;
 						}
+					if (!hasframe)
+						continue;
 					var rect = Rectangle.FromLTRB(xmin, ymin, xmax, ymax);
+					var hitboxes = new Rectangle[16];
 					using (var gif = AnimatedGif.AnimatedGif.Create(path, 16))
+					using (var hbgif = AnimatedGif.AnimatedGif.Create(Path.ChangeExtension(Path.ChangeExtension(path, null) + "_hb", ".gif"), 16))
 						foreach (var cmd in anims[sub])
 							switch (cmd)
 							{
@@ -140,6 +163,9 @@ namespace BG2Img
 								case AnimationCommandGetPalette acgp:
 									Array.Copy(sprpal, acgp.PaletteIndex * 16, anipal, acgp.PaletteDest, acgp.PaletteSize);
 									anipal[0] = Color.Transparent;
+									break;
+								case AnimationCommandHitbox achb:
+									hitboxes[achb.Unknown1 & 0xF] = Rectangle.FromLTRB(achb.Left, achb.Top, achb.Right, achb.Bottom);
 									break;
 								case AnimationCommandDrawFrame acdf:
 									if (acdf.MappingIndex != -1)
@@ -171,6 +197,12 @@ namespace BG2Img
 										bmp.Flip(mf.XFlip, mf.YFlip);
 										using (var res = bmp.ToBitmap(anipal))
 											gif.AddFrame(res, acdf.Delay * 1000 / 60, AnimatedGif.GifQuality.Bit8);
+										bmp.Clear();
+										for (var i = 0; i < 16; i++)
+											if (!hitboxes[i].IsEmpty)
+												bmp.DrawRectangle((byte)(i + 1), hitboxes[i].X - xmin, hitboxes[i].Y - ymin, hitboxes[i].Width, hitboxes[i].Height);
+										using (var res = bmp.ToBitmap())
+											hbgif.AddFrame(res, acdf.Delay * 1000 / 60, AnimatedGif.GifQuality.Bit8);
 									}
 									break;
 							}
@@ -298,8 +330,9 @@ namespace BG2Img
 				for (int x = 0; x < fginf.Width; x++)
 					if (layout[x, y] < chunksImgs.Length)
 						bmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(path)));
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.ChangeExtension(path, ".png"));
+				res.Save(Path.Combine("imgexport", Path.ChangeExtension(path, ".png")));
 		}
 
 		private static void BackgroundToImage(BackgroundLayerJson bginf, Color[] palette, string path)
@@ -331,8 +364,9 @@ namespace BG2Img
 			using (var res = bmp.ToBitmap(palette))
 				res.Save(Path.ChangeExtension(bginf.Tiles, ".png"));
 			bmp = TilemapToImage(layout, tiles);
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(path)));
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.ChangeExtension(path, ".png"));
+				res.Save(Path.Combine("imgexport", Path.ChangeExtension(path, ".png")));
 		}
 
 		private static void CollisionToImage(CollisionJson colinf, string path, int game)
@@ -371,24 +405,27 @@ namespace BG2Img
 			bmp = new BitmapBits(chunkWidth * 8, (chunks.Length + 7) / 8 * chunkHeight);
 			for (int i = 0; i < chunks.Length; i++)
 				bmp.DrawBitmap(chunksImgs[i], i % 8 * chunkWidth, i / 8 * chunkHeight);
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(colinf.Chunks)));
 			using (var res = bmp.ToBitmap4bpp(palette))
-				res.Save(Path.ChangeExtension(Path.ChangeExtension(colinf.Chunks, null) + " Collision", ".png"));
+				res.Save(Path.Combine("imgexport", Path.ChangeExtension(Path.ChangeExtension(colinf.Chunks, null) + " Collision", ".png")));
 			var layout = colinf.GetForegroundHigh(game);
 			bmp = new BitmapBits(colinf.Width * chunkWidth, colinf.Height * chunkHeight);
 			for (int y = 0; y < colinf.Height; y++)
 				for (int x = 0; x < colinf.Width; x++)
 					if (layout[x, y] < chunksImgs.Length)
 						bmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(colinf.ForegroundHigh)));
 			using (var res = bmp.ToBitmap4bpp(palette))
-				res.Save(Path.ChangeExtension(Path.ChangeExtension(colinf.ForegroundHigh, null) + " Collision", ".png"));
+				res.Save(Path.Combine("imgexport", Path.ChangeExtension(Path.ChangeExtension(colinf.ForegroundHigh, null) + " Collision", ".png")));
 			layout = colinf.GetForegroundLow(game);
 			bmp = new BitmapBits(colinf.Width * chunkWidth, colinf.Height * chunkHeight);
 			for (int y = 0; y < colinf.Height; y++)
 				for (int x = 0; x < colinf.Width; x++)
 					if (layout[x, y] < chunksImgs.Length)
 						bmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(colinf.ForegroundLow)));
 			using (var res = bmp.ToBitmap4bpp(palette))
-				res.Save(Path.ChangeExtension(Path.ChangeExtension(colinf.ForegroundLow, null) + " Collision", ".png"));
+				res.Save(Path.Combine("imgexport", Path.ChangeExtension(Path.ChangeExtension(colinf.ForegroundLow, null) + " Collision", ".png")));
 		}
 
 		private static BitmapBits TilemapToImage(TileIndex[,] layout, List<BitmapBits> tiles)

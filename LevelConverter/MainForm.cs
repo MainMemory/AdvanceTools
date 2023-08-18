@@ -79,7 +79,6 @@ namespace LevelConverter
 				ProcessFGLayout(colinf.ForegroundLow, srcgame, dstgame);
 				ProcessGenericFile(colinf.Flags);
 			}
-
 			ProcessObjectLayout(levinf.Interactables, srcgame, dstgame);
 			ProcessGenericFile(levinf.Items);
 			ProcessObjectLayout(levinf.Enemies, srcgame, dstgame);

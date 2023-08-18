@@ -97,6 +97,7 @@ namespace AdvanceTools
 		public static string HashBytes(byte[] buffer) => string.Join(string.Empty, md5.ComputeHash(buffer).Select(a => a.ToString("X2")));
 	}
 
+	[Serializable]
 	public struct GBAColor
 	{
 		public byte R { get; set; }
@@ -174,6 +175,7 @@ namespace AdvanceTools
 		}
 	}
 
+	[Serializable]
 	public class TileIndex
 	{
 		private byte _pal;

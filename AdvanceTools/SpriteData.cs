@@ -168,7 +168,7 @@ namespace AdvanceTools
 				case -5:
 					return new AnimationCommandPlaySFX(file, address);
 				case -6:
-					return new AnimationCommand_6(file, address);
+					return new AnimationCommandHitbox(file, address);
 				case -7:
 					return new AnimationCommandTranslateSprite(file, address);
 				case -8:
@@ -345,24 +345,39 @@ namespace AdvanceTools
 		}
 	}
 
-	public class AnimationCommand_6 : AnimationCommandID
+	public class AnimationCommandHitbox : AnimationCommandID
 	{
 		public int Unknown1 { get; set; }
-		public int Unknown2 { get; set; }
+		public sbyte Left { get; set; }
+		public sbyte Top { get; set; }
+		public sbyte Right { get; set; }
+		public sbyte Bottom { get; set; }
 
 		public override int Size => 12;
 
-		public AnimationCommand_6(byte[] file, int address) : base(file, address)
+		public AnimationCommandHitbox(byte[] file, int address) : base(file, address)
 		{
 			Unknown1 = BitConverter.ToInt32(file, address + 4);
-			Unknown2 = BitConverter.ToInt32(file, address + 8);
+			unchecked
+			{
+				Left = (sbyte)file[address + 8];
+				Top = (sbyte)file[address + 9];
+				Right = (sbyte)file[address + 10];
+				Bottom = (sbyte)file[address + 11];
+			}
 		}
 
 		public override byte[] GetBytes()
 		{
 			byte[] result = base.GetBytes();
 			BitConverter.GetBytes(Unknown1).CopyTo(result, 4);
-			BitConverter.GetBytes(Unknown2).CopyTo(result, 8);
+			unchecked
+			{
+				result[8] = (byte)Left;
+				result[9] = (byte)Top;
+				result[10] = (byte)Right;
+				result[11] = (byte)Bottom;
+			}
 			return result;
 		}
 	}
