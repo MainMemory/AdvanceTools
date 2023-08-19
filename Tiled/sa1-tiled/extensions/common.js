@@ -261,10 +261,10 @@ var writeForegroundLayer = function(filename, layer)
 	}
 }
 
-var sortObjects = function(objects, width, height)
+var sortObjects = function(objects, width, height, hasType)
 {
-	var xrgns = Math.floor((width + 255) / 256);
-	var yrgns = Math.floor((height + 255) / 256);
+	var xrgns = (width + 255) >> 8;
+	var yrgns = (height + 255) >> 8;
 	var result = new Array(xrgns);
 	for (var x = 0; x < xrgns; ++x) {
 		result[x] = new Array(yrgns);
@@ -273,9 +273,26 @@ var sortObjects = function(objects, width, height)
 	}
 	for (var i = 0; i < objects.length; ++i) {
 		var obj = objects[i];
-		if (obj.x >= 0 && obj.x < width && obj.y >= 0 && obj.y < height)
-			result[Math.floor(obj.x / 256)][Math.floor(obj.y / 256)].push(obj);
+		if (obj.x >= 0 && obj.x < width && obj.y >= 0 && obj.y < height) {
+			var rx = obj.x >> 8;
+			var ry = obj.y >> 8;
+			if (!hasType) {
+				if (rx > 0 && Math.round((obj.x & 0xFF) / 8) == 0)
+					--rx;
+				if (ry > 0 && Math.round((obj.y & 0xFF) / 8) <= 1)
+					--ry;
+			}
+			result[rx][ry].push(obj);
+		}
 	}
+	for (var x = 0; x < xrgns; ++x)
+		for (var y = 0; y < yrgns; ++y)
+			result[x][y].sort((a, b) => {
+				var res = a.y - b.y;
+				if (res == 0)
+					res = a.x - b.x;
+				return res;
+			});
 	return {
 		width: xrgns,
 		height: yrgns,
@@ -289,7 +306,7 @@ var writeObjects = function(filename, objects, width, height, hasType, dataCount
 	if (hasType)
 		++objsize;
 	objsize += dataCount;
-	var regions = sortObjects(objects, width, height);
+	var regions = sortObjects(objects, width, height, hasType);
 	var file = new BinaryFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(filename)), BinaryFile.WriteOnly);
 	file.seek(4);
 	var data = new Uint32Array(2);
@@ -330,7 +347,7 @@ var writeObjects = function(filename, objects, width, height, hasType, dataCount
 	}
 	file.seek(0);
 	data = new Uint32Array(1);
-	data[0] = file.size;
+	data[0] = file.size << 8;
 	file.write(data.buffer);
 	file.commit();
 }

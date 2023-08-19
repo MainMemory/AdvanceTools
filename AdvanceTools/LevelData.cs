@@ -50,7 +50,7 @@ namespace AdvanceTools
 			{
 				var bw = new System.IO.BinaryWriter(ms);
 				bw.Write((data.Length << 8) | 0x30);
-				var run = new System.Collections.Generic.List<byte>(128);
+				var run = new List<byte>(128);
 				for (int i = 0; i < data.Length; i++)
 				{
 					byte cur = data[i];
@@ -584,7 +584,7 @@ namespace AdvanceTools
 		public byte GetData() => (byte)((vert << 4) | horz);
 	}
 
-	public abstract class Entry
+	public abstract class Entry : IComparable<Entry>
 	{
 		public ushort X { get; set; }
 		public ushort Y { get; set; }
@@ -597,12 +597,20 @@ namespace AdvanceTools
 			Y = (ushort)(file[address + 1] * 8 + regionY * 256);
 		}
 
-		public virtual byte[] GetBytes()
+		public virtual byte[] GetBytes(int regionX, int regionY)
 		{
 			var result = new byte[ByteSize];
-			result[0] = (byte)(X % 256 / 8);
-			result[1] = (byte)(Y % 256 / 8);
+			result[0] = (byte)Math.Round((X - regionX * 256) / 8d);
+			result[1] = (byte)Math.Round((Y - regionY * 256) / 8d);
 			return result;
+		}
+
+		public int CompareTo(Entry other)
+		{
+			var res = Y - other.Y;
+			if (res == 0)
+				res = X - other.X;
+			return res;
 		}
 
 		public static List<T> ReadLayoutCompressed<T>(string filename) where T : Entry, new() => ReadLayoutCompressed<T>(System.IO.File.ReadAllBytes(filename));
@@ -662,7 +670,21 @@ namespace AdvanceTools
 						regions[x, y] = new List<T>();
 				foreach (var obj in items)
 					if (obj.X >= 0 && obj.Y >= 0)
-						regions[obj.X / 256, obj.Y / 256].Add(obj);
+					{
+						int rx = obj.X / 256;
+						int ry = obj.Y / 256;
+						if (typeof(T) == typeof(RingEntry))
+						{
+							if (rx > 0 && Math.Round((obj.X & 0xFF) / 8d) == 0)
+								--rx;
+							if (ry > 0 && Math.Round((obj.X & 0xFF) / 8d) <= 1)
+								--ry;
+						}
+						regions[rx, ry].Add(obj);
+					}
+				for (var y = 0; y < yrgns; y++)
+					for (var x = 0; x < xrgns; x++)
+						regions[x, y].Sort();
 				bw.Write(0);
 				bw.Write(xrgns);
 				bw.Write(yrgns);
@@ -679,14 +701,14 @@ namespace AdvanceTools
 							bw.Write(objoff - 4);
 							ms.Seek(objoff, System.IO.SeekOrigin.Begin);
 							foreach (var obj in list)
-								bw.Write(obj.GetBytes());
+								bw.Write(obj.GetBytes(x, y));
 							bw.Write((byte)0xFF);
 							objoff = ms.Position;
 						}
 						ptroff += 4;
 					}
 				ms.Seek(0, System.IO.SeekOrigin.Begin);
-				bw.Write((uint)ms.Length);
+				bw.Write((uint)(ms.Length << 8));
 				return ms.ToArray();
 			}
 		}
@@ -704,9 +726,9 @@ namespace AdvanceTools
 			Type = file[address + 2];
 		}
 
-		public override byte[] GetBytes()
+		public override byte[] GetBytes(int regionX, int regionY)
 		{
-			var result = base.GetBytes();
+			var result = base.GetBytes(Type, Type);
 			result[2] = Type;
 			return result;
 		}
@@ -730,9 +752,9 @@ namespace AdvanceTools
 			Data4 = file[address + 6];
 		}
 
-		public override byte[] GetBytes()
+		public override byte[] GetBytes(int regionX, int regionY)
 		{
-			var result = base.GetBytes();
+			var result = base.GetBytes(regionX, regionY);
 			result[3] = Data1;
 			result[4] = Data2;
 			result[5] = Data3;
@@ -753,9 +775,9 @@ namespace AdvanceTools
 			Data5 = file[address + 7];
 		}
 
-		public override byte[] GetBytes()
+		public override byte[] GetBytes(int regionX, int regionY)
 		{
-			var result = base.GetBytes();
+			var result = base.GetBytes(regionX, regionY);
 			result[7] = Data5;
 			return result;
 		}
@@ -787,7 +809,7 @@ namespace AdvanceTools
 			Y = BitConverter.ToUInt16(file, address + 2);
 		}
 
-		public override byte[] GetBytes()
+		public override byte[] GetBytes(int regionX, int regionY)
 		{
 			var result = new byte[ByteSize];
 			BitConverter.GetBytes(X).CopyTo(result, 0);
