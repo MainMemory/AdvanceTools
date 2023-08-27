@@ -816,5 +816,17 @@ namespace AdvanceTools
 			BitConverter.GetBytes(Y).CopyTo(result, 2);
 			return result;
 		}
+
+		public static PlayerEntry Read(string filename)
+		{
+			var result = new PlayerEntry();
+			result.Load(System.IO.File.ReadAllBytes(filename), 0, 0, 0);
+			return result;
+		}
+
+		public void Write(string filename)
+		{
+			System.IO.File.WriteAllBytes(filename, GetBytes(0, 0));
+		}
 	}
 }

@@ -93,6 +93,40 @@ namespace AdvanceTools
 		public BackgroundLayerJson GetBackground2() => Background2 != null ? BackgroundLayerJson.Load(Background2) : null;
 
 		public CollisionJson GetCollision() => Collision != null ? CollisionJson.Load(Collision) : null;
+
+		public List<Data4Entry> GetInteractables(int game)
+		{
+			if (Interactables == null)
+				return null;
+			if (game == 3)
+				return new List<Data4Entry>(Entry.ReadLayout<InteractableEntry3>(Interactables));
+			return new List<Data4Entry>(Entry.ReadLayout<InteractableEntry12>(Interactables));
+		}
+
+		public List<ItemEntry> GetItems()
+		{
+			if (Items == null)
+				return null;
+			return Entry.ReadLayout<ItemEntry>(Items);
+		}
+
+		public List<Data4Entry> GetEnemies(int game)
+		{
+			if (Enemies == null)
+				return null;
+			if (game == 3)
+				return new List<Data4Entry>(Entry.ReadLayout<EnemyEntry3>(Enemies));
+			return new List<Data4Entry>(Entry.ReadLayout<EnemyEntry12>(Enemies));
+		}
+
+		public List<RingEntry> GetRings()
+		{
+			if (Rings == null)
+				return null;
+			return new List<RingEntry>(Entry.ReadLayout<RingEntry>(Rings));
+		}
+
+		public PlayerEntry GetPlayerStart() => PlayerStart != null ? PlayerEntry.Read(PlayerStart) : null;
 	}
 
 	public class CollisionJson : JsonBase
