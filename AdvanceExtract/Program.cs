@@ -364,6 +364,19 @@ namespace AdvanceExtract
 			foreach (var fn in fileList)
 				proj.Hashes.Add(fn.Value, new AdvanceTools.FileInfo(fn.Key, Utility.HashFile(Path.Combine(extract, fn.Value)), (uint)new System.IO.FileInfo(Path.Combine(extract, fn.Value)).Length));
 			proj.Save(Path.Combine(extract, Path.GetFileNameWithoutExtension(filename) + ".saproj"));
+			if (Directory.Exists($@"Tiled\sa{game.Game}-tiled"))
+				CopyDirectory($@"Tiled\sa{game.Game}-tiled", Path.Combine(extract, $"sa{game.Game}-tiled"));
+		}
+
+		private static void CopyDirectory(string source, string destination) => new DirectoryInfo(source).CopyTo(destination);
+
+		private static void CopyTo(this DirectoryInfo source, string destination)
+		{
+			Directory.CreateDirectory(destination);
+			foreach (var dir in source.EnumerateDirectories())
+				dir.CopyTo(Path.Combine(destination, dir.Name));
+			foreach (var file in source.EnumerateFiles())
+				file.CopyTo(Path.Combine(destination, file.Name), true);
 		}
 
 		private static JsonSerializerSettings SetDefaults() => new JsonSerializerSettings() { Formatting = Formatting.Indented };
