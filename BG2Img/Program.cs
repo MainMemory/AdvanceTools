@@ -315,7 +315,7 @@ namespace BG2Img
 				tlayout[i % 16, i / 16] = new TileIndex(i, false, false, tilepals[i]);
 			BitmapBits bmp = TilemapToImage(tlayout, tiles);
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.ChangeExtension(fginf.Tiles, ".png"));
+				SaveImage(res, fginf.Tiles);
 			int chunkWidth = fginf.ChunkWidth * 8;
 			int chunkHeight = fginf.ChunkHeight * 8;
 			var chunksImgs = chunks.Select(a => TilemapToImage(a, tiles)).ToArray();
@@ -323,16 +323,15 @@ namespace BG2Img
 			for (int i = 0; i < chunks.Length; i++)
 				bmp.DrawBitmap(chunksImgs[i], i % 8 * chunkWidth, i / 8 * chunkHeight);
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.ChangeExtension(fginf.Chunks, ".png"));
+				SaveImage(res, fginf.Chunks);
 			var layout = fginf.GetLayout(game);
 			bmp = new BitmapBits(fginf.Width * chunkWidth, fginf.Height * chunkHeight);
 			for (int y = 0; y < fginf.Height; y++)
 				for (int x = 0; x < fginf.Width; x++)
 					if (layout[x, y] < chunksImgs.Length)
 						bmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
-			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(path)));
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.Combine("imgexport", Path.ChangeExtension(path, ".png")));
+				SaveImage(res, path);
 		}
 
 		private static void BackgroundToImage(BackgroundLayerJson bginf, Color[] palette, string path)
@@ -362,11 +361,10 @@ namespace BG2Img
 				tlayout[i % 16, i / 16] = new TileIndex(i, false, false, tilepals[i]);
 			BitmapBits bmp = TilemapToImage(tlayout, tiles);
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.ChangeExtension(bginf.Tiles, ".png"));
+				SaveImage(res, bginf.Tiles);
 			bmp = TilemapToImage(layout, tiles);
-			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(path)));
 			using (var res = bmp.ToBitmap(palette))
-				res.Save(Path.Combine("imgexport", Path.ChangeExtension(path, ".png")));
+				SaveImage(res, path);
 		}
 
 		private static void CollisionToImage(CollisionJson colinf, string path, int game)
@@ -397,7 +395,7 @@ namespace BG2Img
 				tlayout[i % 16, i / 16] = new TileIndex(i, false, false, 0);
 			BitmapBits bmp = TilemapToImage(tlayout, heightsImgs);
 			using (var res = bmp.ToBitmap4bpp(palette))
-				res.Save(Path.ChangeExtension(colinf.Heightmaps, ".png"));
+				SaveImage(res, colinf.Heightmaps);
 			var chunks = colinf.GetChunks();
 			var chunksImgs = chunks.Select(a => TilemapToImage(a, heightsImgs)).ToArray();
 			const int chunkWidth = 12 * 8;
@@ -459,6 +457,12 @@ namespace BG2Img
 		{
 			if (bginf.Palette != null)
 				bginf.GetPalette().Select(a => a.RGBColor).ToArray().CopyTo(palette, bginf.PalDest);
+		}
+
+		private static void SaveImage(Bitmap bmp, string path)
+		{
+			Directory.CreateDirectory(Path.Combine("imgexport", Path.GetDirectoryName(path)));
+			bmp.Save(Path.Combine("imgexport", Path.ChangeExtension(path, ".png")));
 		}
 	}
 
