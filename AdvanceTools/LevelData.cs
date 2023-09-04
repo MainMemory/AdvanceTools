@@ -559,7 +559,7 @@ namespace AdvanceTools
 		public byte[] ReadForegroundLowRaw(byte[] file, int game) => ReadLayoutRaw(file, game, ForegroundLow);
 	}
 
-	public struct Heightmap
+	public struct Heightmap : IEquatable<Heightmap>
 	{
 		private byte vert;
 		public byte Vertical
@@ -582,6 +582,8 @@ namespace AdvanceTools
 		}
 
 		public byte GetData() => (byte)((vert << 4) | horz);
+
+		public bool Equals(Heightmap other) => Horizontal == other.Horizontal && Vertical == other.Vertical;
 	}
 
 	public abstract class Entry : IComparable<Entry>
