@@ -679,7 +679,7 @@ namespace AdvanceTools
 						{
 							if (rx > 0 && Math.Round((obj.X & 0xFF) / 8d) == 0)
 								--rx;
-							if (ry > 0 && Math.Round((obj.X & 0xFF) / 8d) <= 1)
+							if (ry > 0 && Math.Round((obj.Y & 0xFF) / 8d) <= 1)
 								--ry;
 						}
 						regions[rx, ry].Add(obj);

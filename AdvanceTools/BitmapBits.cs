@@ -1030,6 +1030,38 @@ namespace AdvanceTools
 			}
 		}
 
+		public unsafe void ApplyPalette(byte palette)
+		{
+			ulong longval = (ulong)(palette << 4);
+			longval |= longval << 8;
+			longval |= longval << 16;
+			longval |= longval << 32;
+			int length = Bits.Length;
+			fixed (byte* fp = Bits)
+			{
+				ulong* lp = (ulong*)fp;
+				int longlen = length / 8;
+				for (int i = 0; i < longlen; i++)
+					*lp++ |= longval;
+				if ((length & 7) != 0)
+				{
+					byte* bp = (byte*)lp;
+					if ((length & 4) == 4)
+					{
+						*(uint*)bp |= (uint)longval;
+						bp += 4;
+					}
+					if ((length & 2) == 2)
+					{
+						*(ushort*)bp |= (ushort)longval;
+						bp += 2;
+					}
+					if ((length & 1) == 1)
+						*bp |= (byte)longval;
+				}
+			}
+		}
+
 		public unsafe void ApplyWaterPalette(int waterHeight)
 		{
 			if (waterHeight < 0 || waterHeight > Height) throw new ArgumentOutOfRangeException("waterHeight");

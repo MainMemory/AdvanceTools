@@ -169,6 +169,8 @@ namespace MDGBALevelConverter
 						for (int x = 0; x < 2; x++)
 						{
 							PatternIndex blktil = blk.Tiles[x, y];
+							if (blktil.Tile >= LevelData.Tiles.Count)
+								blktil.Tile = 0;
 							sbyte[] tmpcol1l = CropHeightmap(col1l, x, y);
 							sbyte[] tmpcol2l = CropHeightmap(col2l, y, x);
 							byte tmpangl = angl;
@@ -177,9 +179,32 @@ namespace MDGBALevelConverter
 							byte tmpangh = angh;
 							FlipHeightmap(ref tmpcol1l, ref tmpcol2l, ref tmpangl, blktil.XFlip, blktil.YFlip);
 							FlipHeightmap(ref tmpcol1h, ref tmpcol2h, ref tmpangh, blktil.XFlip, blktil.YFlip);
-							ColInfo colinf = new ColInfo(blktil.Tile, null, ConvertHeightmap(tmpcol1l, tmpcol2l), tmpangl);
-							if (tilecol[blktil.Tile].CollisionSet)
+							if (AdvanceTools.Extensions.FastArrayEqual(tmpcol1h, tmpcol1l))
 							{
+								ColInfo colinf = new ColInfo(blktil.Tile, null, ConvertHeightmap(tmpcol1l, tmpcol2l), tmpangl);
+								if (tilecol[blktil.Tile].CollisionSet)
+								{
+									int ind = tilecol.IndexOf(colinf);
+									if (ind == -1)
+									{
+										ind = tilecol.Count;
+										tilecol.Add(colinf);
+									}
+									newblk[1][x, y] = new TileIndex((ushort)ind, blktil.YFlip, blktil.XFlip, blktil.Palette);
+								}
+								else
+								{
+									tilecol[blktil.Tile] = colinf;
+									newblk[1][x, y] = new TileIndex(blktil.Tile, blktil.YFlip, blktil.XFlip, blktil.Palette);
+								}
+								if (blktil.Priority)
+									newblk[0][x, y] = newblk[1][x, y].Clone();
+								else
+									newblk[0][x, y] = new TileIndex();
+							}
+							else if (blktil.Priority)
+							{
+								ColInfo colinf = new ColInfo(0, null, ConvertHeightmap(tmpcol1l, tmpcol2l), tmpangl);
 								int ind = tilecol.IndexOf(colinf);
 								if (ind == -1)
 								{
@@ -187,24 +212,8 @@ namespace MDGBALevelConverter
 									tilecol.Add(colinf);
 								}
 								newblk[1][x, y] = new TileIndex((ushort)ind, blktil.YFlip, blktil.XFlip, blktil.Palette);
-							}
-							else
-							{
-								tilecol[blktil.Tile] = colinf;
-								newblk[1][x, y] = new TileIndex(blktil.Tile, blktil.YFlip, blktil.XFlip, blktil.Palette);
-							}
-							if (AdvanceTools.Extensions.FastArrayEqual(tmpcol1h, tmpcol1l))
-							{
-								if (blktil.Priority)
-									newblk[0][x, y] = newblk[1][x, y].Clone();
-								else
-									newblk[0][x, y] = new TileIndex();
-							}
-							else
-							{
-								int ind = blktil.Priority ? blktil.Tile : 0;
-								colinf = new ColInfo((ushort)ind, null, ConvertHeightmap(tmpcol1h, tmpcol2h), tmpangh);
-								if (tilecol[ind].CollisionSet)
+								colinf = new ColInfo(blktil.Tile, null, ConvertHeightmap(tmpcol1h, tmpcol2h), tmpangh);
+								if (tilecol[blktil.Tile].CollisionSet)
 								{
 									ind = tilecol.IndexOf(colinf);
 									if (ind == -1)
@@ -217,8 +226,36 @@ namespace MDGBALevelConverter
 								else
 								{
 									tilecol[blktil.Tile] = colinf;
-									newblk[0][x, y] = new TileIndex((ushort)ind, blktil.YFlip, blktil.XFlip, blktil.Palette);
+									newblk[0][x, y] = new TileIndex(blktil.Tile, blktil.YFlip, blktil.XFlip, blktil.Palette);
 								}
+							}
+							else
+							{
+								int ind;
+								ColInfo colinf = new ColInfo(blktil.Tile, null, ConvertHeightmap(tmpcol1l, tmpcol2l), tmpangl);
+								if (tilecol[blktil.Tile].CollisionSet)
+								{
+									ind = tilecol.IndexOf(colinf);
+									if (ind == -1)
+									{
+										ind = tilecol.Count;
+										tilecol.Add(colinf);
+									}
+									newblk[1][x, y] = new TileIndex((ushort)ind, blktil.YFlip, blktil.XFlip, blktil.Palette);
+								}
+								else
+								{
+									tilecol[blktil.Tile] = colinf;
+									newblk[1][x, y] = new TileIndex(blktil.Tile, blktil.YFlip, blktil.XFlip, blktil.Palette);
+								}
+								colinf = new ColInfo(0, null, ConvertHeightmap(tmpcol1h, tmpcol2h), tmpangh);
+								ind = tilecol.IndexOf(colinf);
+								if (ind == -1)
+								{
+									ind = tilecol.Count;
+									tilecol.Add(colinf);
+								}
+								newblk[0][x, y] = new TileIndex((ushort)ind, blktil.YFlip, blktil.XFlip, blktil.Palette);
 							}
 						}
 				}
@@ -284,7 +321,10 @@ namespace MDGBALevelConverter
 			for (int y = 0; y < LevelData.FGHeight; y++)
 				for (int x = 0; x < LevelData.FGWidth; x++)
 				{
-					TileIndex[][,] cnk = chunktiles[LevelData.Layout.FGLayout[x, y]];
+					ushort cid = LevelData.Layout.FGLayout[x, y];
+					if (cid >= chunktiles.Count)
+						cid = 0;
+					TileIndex[][,] cnk = chunktiles[cid];
 					for (int ty = 0; ty < chunktileheight; ty++)
 						for (int tx = 0; tx < chunktilewidth; tx++)
 						{
@@ -298,13 +338,18 @@ namespace MDGBALevelConverter
 			for (int y = 0; y < LevelData.BGHeight; y++)
 				for (int x = 0; x < LevelData.BGWidth; x++)
 				{
-					TileIndex[][,] cnk = chunktiles[LevelData.Layout.BGLayout[x, y]];
+					ushort cid = LevelData.Layout.BGLayout[x, y];
+					if (cid >= chunktiles.Count)
+						cid = 0;
+					TileIndex[][,] cnk = chunktiles[cid];
 					for (int ty = 0; ty < chunktileheight; ty++)
 						for (int tx = 0; tx < chunktilewidth; tx++)
 							bgtilelayout[x * chunktilewidth + tx, y * chunktileheight + ty] = cnk[1][tx, ty].Clone();
 				}
 			byte[][] gbatiles = LevelData.Tiles.Select(a => a is null ? new byte[32] : a.Select(b => (byte)(((b & 0xF) << 4) | (b >> 4))).ToArray()).ToArray();
 			List<ushort> fgtiles = fgtilelayout.SelectMany(a => a.OfType<TileIndex>().Select(b => b.Tile)).Distinct().ToList();
+			if (fgtiles.Count > 0x400 && MessageBox.Show(this, "Level uses too many tiles! Output will not display correctly.\n\nContinue anyway?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				return;
 			fgtiles.Sort();
 			for (int y = 0; y < newfgheight; y++)
 				for (int x = 0; x < newfgwidth; x++)
@@ -312,6 +357,18 @@ namespace MDGBALevelConverter
 					fgtilelayout[0][x, y].Tile = (ushort)fgtiles.IndexOf(fgtilelayout[0][x, y].Tile);
 					fgtilelayout[1][x, y].Tile = (ushort)fgtiles.IndexOf(fgtilelayout[1][x, y].Tile);
 				}
+			List<byte>[] fglayout = new List<byte>[2];
+			fglayout[0] = new List<byte>();
+			fglayout[1] = new List<byte>();
+			List<byte[]> gbachunks = new List<byte[]>() { new byte[12 * 12 * 2] };
+			for (int y = 0; y < newfgheight; y += 12)
+				for (int x = 0; x < newfgwidth; x += 12)
+				{
+					GetGBAChunk(fgtilelayout, fglayout, x, y, 0, gbachunks);
+					GetGBAChunk(fgtilelayout, fglayout, x, y, 1, gbachunks);
+				}
+			if (project.Game == 1 && gbachunks.Count > 0x100 && MessageBox.Show(this, "Level uses too many chunks! Output will not display correctly.\n\nContinue anyway?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				return;
 			List<ColInfo> fgcol = fgtiles.Select(a => tilecol[a]).ToList();
 			File.WriteAllBytes(gbafgh.Tiles, fgcol.SelectMany(a => gbatiles[a.TileIndex]).ToArray());
 			gbafgh.AniTiles = null;
@@ -335,16 +392,6 @@ namespace MDGBALevelConverter
 			gbafgl.PalDest = 0;
 			gbabg.Palette = gbafgh.Palette;
 			gbabg.PalDest = 0;
-			List<byte>[] fglayout = new List<byte>[2];
-			fglayout[0] = new List<byte>();
-			fglayout[1] = new List<byte>();
-			List<byte[]> gbachunks = new List<byte[]>() { new byte[12 * 12 * 2] };
-			for (int y = 0; y < newfgheight; y += 12)
-				for (int x = 0; x < newfgwidth; x += 12)
-				{
-					GetGBAChunk(fgtilelayout, fglayout, x, y, 0, gbachunks);
-					GetGBAChunk(fgtilelayout, fglayout, x, y, 1, gbachunks);
-				}
 			File.WriteAllBytes(gbacolinf.Chunks, gbachunks.SelectMany(a => a).ToArray());
 			File.WriteAllBytes(gbacolinf.ForegroundHigh, fglayout[0].ToArray());
 			File.WriteAllBytes(gbacolinf.ForegroundLow, fglayout[1].ToArray());
@@ -439,6 +486,8 @@ namespace MDGBALevelConverter
 
 		private static TileIndex[,] GetBlockCol(List<ColInfo> tilecol, List<TileIndex[][,]> blockconv, Dictionary<int, TileIndex[,]> blockcoldict, int blk, Solidity solid, int layer)
 		{
+			if (blk >= LevelData.Blocks.Count)
+				blk = 0;
 			if (solid == Solidity.LRBSolid)
 				solid = Solidity.AllSolid;
 			int ind = blk | ((int)solid << 16) | (layer << 18);
