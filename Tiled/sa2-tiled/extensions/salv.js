@@ -13,6 +13,8 @@ var salvMapFormat = {
 		var chunkWidth = 0;
 		var chunkHeight = 0;
 		var palette = new Array(256);
+		for (var i = 0; i < 256; ++i)
+			palette[i] = 0xFF000000;
 
 		var foregroundHigh = null;
 		if (stginf.ForegroundHigh != null) {

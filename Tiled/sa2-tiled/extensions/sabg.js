@@ -17,6 +17,8 @@ var sabgMapFormat = {
 		tilemap.setSize(bginf.Width, bginf.Height);
 
 		var palette = new Array(256);
+		for (var i = 0; i < 256; ++i)
+			palette[i] = 0xFF000000;
 		readPalette(bginf, palette);
 
 		var file = new BinaryFile(FileInfo.joinPaths(projpath, FileInfo.fromNativeSeparators(bginf.Tiles)), BinaryFile.ReadOnly);
