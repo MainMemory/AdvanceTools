@@ -14,6 +14,7 @@ namespace BG2Img
 		static List<BitmapBits> sprtiles16 = new List<BitmapBits>();
 		static List<BitmapBits> sprtiles256 = new List<BitmapBits>();
 		static Color[] sprpal;
+		static Dictionary<string, LayerJsonBase> tanims = new Dictionary<string, LayerJsonBase>();
 
 		static void Main(string[] args)
 		{
@@ -313,25 +314,54 @@ namespace BG2Img
 			var tlayout = new TileIndex[16, (tiles.Count + 15) / 16];
 			for (ushort i = 0; i < tiles.Count; i++)
 				tlayout[i % 16, i / 16] = new TileIndex(i, false, false, tilepals[i]);
-			BitmapBits bmp = TilemapToImage(tlayout, tiles);
-			using (var res = bmp.ToBitmap(palette))
+			BitmapBits tbmp = TilemapToImage(tlayout, tiles);
+			using (var res = tbmp.ToBitmap(palette))
 				SaveImage(res, fginf.Tiles);
 			int chunkWidth = fginf.ChunkWidth * 8;
 			int chunkHeight = fginf.ChunkHeight * 8;
 			var chunksImgs = chunks.Select(a => TilemapToImage(a, tiles)).ToArray();
-			bmp = new BitmapBits(chunkWidth * 8, (chunks.Length + 7) / 8 * chunkHeight);
+			var cbmp = new BitmapBits(chunkWidth * 8, (chunks.Length + 7) / 8 * chunkHeight);
 			for (int i = 0; i < chunks.Length; i++)
-				bmp.DrawBitmap(chunksImgs[i], i % 8 * chunkWidth, i / 8 * chunkHeight);
-			using (var res = bmp.ToBitmap(palette))
+				cbmp.DrawBitmap(chunksImgs[i], i % 8 * chunkWidth, i / 8 * chunkHeight);
+			using (var res = cbmp.ToBitmap(palette))
 				SaveImage(res, fginf.Chunks);
 			var layout = fginf.GetLayout(game);
-			bmp = new BitmapBits(fginf.Width * chunkWidth, fginf.Height * chunkHeight);
+			var lbmp = new BitmapBits(fginf.Width * chunkWidth, fginf.Height * chunkHeight);
 			for (int y = 0; y < fginf.Height; y++)
 				for (int x = 0; x < fginf.Width; x++)
 					if (layout[x, y] < chunksImgs.Length)
-						bmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
-			using (var res = bmp.ToBitmap(palette))
+						lbmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
+			using (var res = lbmp.ToBitmap(palette))
 				SaveImage(res, path);
+			if (fginf.AniTiles != null)
+				tanims[fginf.Tiles] = fginf;
+			if (tanims.TryGetValue(fginf.Tiles, out var tani))
+			{
+				data = tani.GetAniTiles();
+				using (var tgif = AnimatedGif.AnimatedGif.Create(Path.Combine("imgexport", Path.ChangeExtension(fginf.Tiles, ".gif")), tani.AnimDelay * 1000 / 60))
+				using (var cgif = AnimatedGif.AnimatedGif.Create(Path.Combine("imgexport", Path.ChangeExtension(fginf.Chunks, ".gif")), tani.AnimDelay * 1000 / 60))
+				using (var lgif = AnimatedGif.AnimatedGif.Create(Path.Combine("imgexport", Path.ChangeExtension(path, ".gif")), tani.AnimDelay * 1000 / 60))
+				{
+					tgif.AddFrame(tbmp.ToBitmap(palette));
+					cgif.AddFrame(cbmp.ToBitmap(palette));
+					lgif.AddFrame(lbmp.ToBitmap(palette));
+					for (int af = 0; af < tani.AnimFrameCount - 1; af++)
+					{
+						for (int i = 0; i < tani.AniTilesSize; i += 32)
+							tiles[i / 32] = BitmapBits.FromTile4bpp(data, tani.AniTilesSize * af + i);
+						tgif.AddFrame(TilemapToImage(tlayout, tiles).ToBitmap(palette));
+						chunksImgs = chunks.Select(a => TilemapToImage(a, tiles)).ToArray();
+						for (int i = 0; i < chunks.Length; i++)
+							cbmp.DrawBitmap(chunksImgs[i], i % 8 * chunkWidth, i / 8 * chunkHeight);
+						cgif.AddFrame(cbmp.ToBitmap(palette));
+						for (int y = 0; y < fginf.Height; y++)
+							for (int x = 0; x < fginf.Width; x++)
+								if (layout[x, y] < chunksImgs.Length)
+									lbmp.DrawBitmap(chunksImgs[layout[x, y]], x * chunkWidth, y * chunkHeight);
+						lgif.AddFrame(lbmp.ToBitmap(palette));
+					}
+				}
+			}
 		}
 
 		private static void BackgroundToImage(BackgroundLayerJson bginf, Color[] palette, string path)
@@ -359,12 +389,31 @@ namespace BG2Img
 			var tlayout = new TileIndex[16, (tiles.Count + 15) / 16];
 			for (ushort i = 0; i < tiles.Count; i++)
 				tlayout[i % 16, i / 16] = new TileIndex(i, false, false, tilepals[i]);
-			BitmapBits bmp = TilemapToImage(tlayout, tiles);
-			using (var res = bmp.ToBitmap(palette))
+			BitmapBits tbmp = TilemapToImage(tlayout, tiles);
+			using (var res = tbmp.ToBitmap(palette))
 				SaveImage(res, bginf.Tiles);
-			bmp = TilemapToImage(layout, tiles);
-			using (var res = bmp.ToBitmap(palette))
+			var lbmp = TilemapToImage(layout, tiles);
+			using (var res = lbmp.ToBitmap(palette))
 				SaveImage(res, path);
+			if (bginf.AniTiles != null)
+				tanims[bginf.Tiles] = bginf;
+			if (tanims.TryGetValue(bginf.Tiles, out var tani))
+			{
+				data = tani.GetAniTiles();
+				using (var tgif = AnimatedGif.AnimatedGif.Create(Path.Combine("imgexport", Path.ChangeExtension(bginf.Tiles, ".gif")), tani.AnimDelay * 1000 / 60))
+				using (var lgif = AnimatedGif.AnimatedGif.Create(Path.Combine("imgexport", Path.ChangeExtension(path, ".gif")), tani.AnimDelay * 1000 / 60))
+				{
+					tgif.AddFrame(tbmp.ToBitmap(palette));
+					lgif.AddFrame(lbmp.ToBitmap(palette));
+					for (int af = 0; af < tani.AnimFrameCount - 1; af++)
+					{
+						for (int i = 0; i < tani.AniTilesSize; i += 32)
+							tiles[i / 32] = BitmapBits.FromTile4bpp(data, tani.AniTilesSize * af + i);
+						tgif.AddFrame(TilemapToImage(tlayout, tiles).ToBitmap(palette));
+						lgif.AddFrame(TilemapToImage(layout, tiles).ToBitmap(palette));
+					}
+				}
+			}
 		}
 
 		private static void CollisionToImage(CollisionJson colinf, string path, int game)
