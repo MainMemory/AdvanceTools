@@ -345,8 +345,8 @@ namespace AdvanceTools
 		{
 			if (Tiles == 0)
 				return null;
-			byte[] result = new byte[AniTilesSize * AnimFrameCount];
-			Array.Copy(file, Tiles + TilesSize, result, 0, AniTilesSize * AnimFrameCount);
+			byte[] result = new byte[AniTilesSize * (AnimFrameCount - 1)];
+			Array.Copy(file, Tiles + TilesSize, result, 0, AniTilesSize * (AnimFrameCount - 1));
 			return result;
 		}
 
