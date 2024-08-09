@@ -187,6 +187,7 @@ namespace AdvanceBG
 			changeLevelToolStripMenuItem.DropDownItems.Clear();
 			levelMenuItems = new Dictionary<string, ToolStripMenuItem>();
 			var parent = (ToolStripMenuItem)changeLevelToolStripMenuItem.DropDownItems.Add("Level Backgrounds");
+			var parent2 = (ToolStripMenuItem)changeLevelToolStripMenuItem.DropDownItems.Add("Level Chunks");
 			foreach (string item in game.Levels.Where(a => !string.IsNullOrEmpty(a)))
 			{
 				var level = LevelJson.Load(item);
@@ -208,6 +209,28 @@ namespace AdvanceBG
 						ToolStripMenuItem ts = new ToolStripMenuItem(key.Replace("&", "&&"), null, new EventHandler(LevelToolStripMenuItem_Clicked)) { Tag = level.Background2 };
 						levelMenuItems.Add(key, ts);
 						parent.DropDownItems.Add(ts);
+					}
+				}
+				if (!string.IsNullOrEmpty(level.ForegroundHigh))
+				{
+					var path = level.GetForegroundHigh().Chunks;
+					var key = Path.GetFileNameWithoutExtension(path);
+					if (!levelMenuItems.ContainsKey(key))
+					{
+						ToolStripMenuItem ts = new ToolStripMenuItem(key.Replace("&", "&&"), null, new EventHandler(LevelToolStripMenuItem_Clicked)) { Tag = Path.ChangeExtension(path, ".sabg") };
+						levelMenuItems.Add(key, ts);
+						parent2.DropDownItems.Add(ts);
+					}
+				}
+				if (!string.IsNullOrEmpty(level.ForegroundLow))
+				{
+					var path = level.GetForegroundLow().Chunks;
+					var key = Path.GetFileNameWithoutExtension(path);
+					if (!levelMenuItems.ContainsKey(key))
+					{
+						ToolStripMenuItem ts = new ToolStripMenuItem(key.Replace("&", "&&"), null, new EventHandler(LevelToolStripMenuItem_Clicked)) { Tag = Path.ChangeExtension(path, ".sabg") };
+						levelMenuItems.Add(key, ts);
+						parent2.DropDownItems.Add(ts);
 					}
 				}
 			}

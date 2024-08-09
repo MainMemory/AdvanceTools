@@ -359,6 +359,13 @@ namespace AdvanceExtract
 				byte[] data = new byte[size];
 				Array.Copy(file, chunk.Key, data, 0, size);
 				File.WriteAllBytes(Path.Combine(extract, chunk.Value), data);
+				var jsp = Path.Combine(extract, Path.ChangeExtension(chunk.Value, ".sabg"));
+				if (File.Exists(jsp))
+				{
+					var bg = BackgroundLayerJson.Load(jsp);
+					bg.Height = (ushort)(size / bg.Width / 2);
+					bg.Save(jsp);
+				}
 			}
 			proj.Hashes = new Dictionary<string, AdvanceTools.FileInfo>(fileList.Count);
 			foreach (var fn in fileList)
@@ -435,6 +442,19 @@ namespace AdvanceExtract
 					chunkFiles.Add(layer.Chunks, path);
 					fileList.Add(layer.Chunks, path);
 					json.Chunks = path;
+					new BackgroundLayerJson
+					{
+						AnimDelay = json.AnimDelay,
+						AnimFrameCount = json.AnimFrameCount,
+						AniTiles = json.AniTiles,
+						AniTilesSize = json.AniTilesSize,
+						Layout = json.Chunks,
+						PalDest = json.PalDest,
+						Palette = json.Palette,
+						Tiles = json.Tiles,
+						Width = json.ChunkWidth,
+						Height = json.ChunkHeight
+					}.Save(Path.Combine(extract, Path.ChangeExtension(path, ".sabg")));
 				}
 			}
 			else
