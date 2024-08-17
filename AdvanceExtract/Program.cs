@@ -241,7 +241,9 @@ namespace AdvanceExtract
 				var spriteTable = new SpriteTable(file, version.SpriteTable, game.AnimationCount);
 				List<string> animfiles = new List<string>();
 				List<string> mapfiles = new List<string>();
+				Dictionary<string, int> mapcounts = new Dictionary<string, int>();
 				List<string> attrfiles = new List<string>();
+				Dictionary<string, int> attrcounts = new Dictionary<string, int>();
 				int palcnt = 0;
 				uint tile16cnt = 0;
 				uint tile256cnt = 0;
@@ -293,25 +295,61 @@ namespace AdvanceExtract
 						else
 							animfiles.Add(fileList[anims.Address]);
 						var maps = spriteTable.GetMappings(file, i, mapcnt, game.Game);
-						if (!fileList.ContainsKey(maps.Address))
+						if (maps != null)
 						{
-							path = Path.Combine("Sprites", "Mappings", $"{i}.bin");
+							bool savemaps = false;
+							if (!fileList.ContainsKey(maps.Address))
+							{
+								path = Path.Combine("Sprites", "Mappings", $"{i}.bin");
+								fileList.Add(maps.Address, path);
+								mapcounts[path] = mapcnt;
+								savemaps = true;
+							}
+							else
+							{
+								path = fileList[maps.Address];
+								if (mapcnt > mapcounts[path])
+								{
+									mapcounts[path] = mapcnt;
+									savemaps = true;
+								}
+							}
 							mapfiles.Add(path);
-							File.WriteAllBytes(Path.Combine(extract, path), MappingFrame.GetBytes(maps, game.Game));
-							fileList.Add(maps.Address, path);
+							if (savemaps)
+								File.WriteAllBytes(Path.Combine(extract, path), MappingFrame.GetBytes(maps, game.Game));
+							int attrcnt = MappingFrame.GetAttributesCount(maps);
+							var attrs = spriteTable.GetAttributes(file, i, attrcnt);
+							if (attrs != null)
+							{
+								bool saveattrs = false;
+								if (!fileList.ContainsKey(attrs.Address))
+								{
+									path = Path.Combine("Sprites", "Attributes", $"{i}.bin");
+									fileList.Add(attrs.Address, path);
+									attrcounts[path] = attrcnt;
+									saveattrs = true;
+								}
+								else
+								{
+									path = fileList[attrs.Address];
+									if (attrcnt > attrcounts[path])
+									{
+										attrcounts[path] = attrcnt;
+										saveattrs = true;
+									}
+								}
+								attrfiles.Add(path);
+								if (saveattrs)
+									File.WriteAllBytes(Path.Combine(extract, path), SpriteAttributes.GetBytes(attrs));
+							}
+							else
+								attrfiles.Add(null);
 						}
 						else
-							mapfiles.Add(fileList[maps.Address]);
-						var attrs = spriteTable.GetAttributes(file, i, MappingFrame.GetAttributesCount(maps));
-						if (!fileList.ContainsKey(attrs.Address))
 						{
-							path = Path.Combine("Sprites", "Attributes", $"{i}.bin");
-							attrfiles.Add(path);
-							File.WriteAllBytes(Path.Combine(extract, path), SpriteAttributes.GetBytes(attrs));
-							fileList.Add(attrs.Address, path);
+							mapfiles.Add(null);
+							attrfiles.Add(null);
 						}
-						else
-							attrfiles.Add(fileList[attrs.Address]);
 					}
 					else
 					{
